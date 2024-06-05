@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ActiveTeam from "./Active Page/active-team";
+import React, { useState } from "react";
+import axios from "axios";
 
 function App() {
+  return <ActiveTeam />;
+}
+
+const CreateWorkspace = () => {
+  const [workspaceName, setWorkspaceName] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:3001/workspace", {
+        workspaceName: workspaceName,
+      });
+
+      setMessage("Workspace created successfully!");
+      console.log("Workspace created:", response.data);
+    } catch (error) {
+      console.error("Error creating workspace:", error);
+      setMessage(
+        `Failed to create workspace. Error: ${
+          error.response?.data?.error || error.message
+        }`
+      );
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Create Workspace</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="workspaceName">Workspace Name:</label>
+        <input
+          type="text"
+          id="workspaceName"
+          value={workspaceName}
+          onChange={(e) => setWorkspaceName(e.target.value)}
+          required
+        />
+        <button type="submit">Create</button>
+      </form>
+      {message && <p>{message}</p>}
     </div>
   );
-}
+};
 
 export default App;

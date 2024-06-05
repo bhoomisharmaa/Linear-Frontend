@@ -1,13 +1,93 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-color: #0f1011;
+  --light-color: #6b6f76;
+  --content-bg-color: #080808;
+  --header-color: #0f1011;
+  --header-height: 39px;
+  --issue-header-height: 36px;
+  --issue-section-height: 44px;
+  --focus-color: #5e69d1;
+  --focus-ring-color: #7a83d4#7a83d4;
+  --focus-ring-width: 1px;
+  --focus-ring-offset: 0px;
+  --focus-ring-outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  --color-bg-primary: #0f1011;
+  --color-bg-secondary: #1b1c20;
+  --color-bg-tertiary: #212329;
+  --color-bg-quaternary: #141518;
+  --color-bg-quinary: #17181a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e3e4e6;
+  --color-text-tertiary: #949496;
+  --color-text-quaternary: #595a5c;
+  --color-text-quinary: #97999b;
+  --color-border-primary: #191b1f;
+  --color-border-secondary: #23252a;
+  --color-border-tertiary: #2c2e33;
+  --color-border-quaternary: #383b42;
+  --color-button-fill: #292a35;
+  --color-button-secondary: #292c33;
+  --color-button-border: #393a4b;
+
+  /* ui colors */
+  --color-ui-1: #dcd8fe;
+
+  /* decoration */
+  --color-decoration-1: #4ea7fc;
+  --color-decoration-red: #eb5757;
+  --color-decoration-purple: #bb87fc;
+  --color-decoration-blue: #4ea7fc;
+  --color-decoration-bg-1: #4ea8fc3d;
+
+  /* scrollbar */
+  --scrollbar-width: 12px;
+  --scrollbar-min-size: 32px;
+  --scrollbar-color: #5a5b5d;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+:root {
+  -font-monospace: "SFMono Regular", Consolas, "Liberation Mono", Menlo, Courier,
     monospace;
+  --font-regular: "Inter UI", "SF Pro Display", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Open Sans", "Helvetica Neue", sans-serif;
+  --font-display: "Inter", var(--font-regular);
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Segoe UI", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji";
+  --speed-highlightFadeIn: 0s;
+  --speed-highlightFadeOut: 0.15s;
+  --speed-quickTransition: 0.1s;
+  --speed-regularTransition: 0.25s;
+  --speed-slowTransition: 0.35s;
+  --font-size-micro: 0.6875rem;
+  --font-size-microPlus: 0.6875rem;
+  --font-size-mini: 0.75rem;
+  --font-size-miniPlus: 0.75rem;
+  --font-size-small: 0.8125rem;
+  --font-size-smallPlus: 0.845rem;
+  --font-size-regular: 0.9375rem;
+  --font-size-regularPlus: 0.9375rem;
+  --font-size-large: 1.125rem;
+  --font-size-largePlus: 1.125rem;
+  --font-size-title1: 2.25rem;
+  --font-size-title2: 1.5rem;
+  --font-size-title3: 1.25rem;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --radius-circle: 50%;
+  --radius-rounded: 9999px;
+  --header-height: 39px;
+}
+
+body {
+  overflow: hidden;
+  background-color: var(--content-bg-color);
+  font-family: var(--font-display);
 }

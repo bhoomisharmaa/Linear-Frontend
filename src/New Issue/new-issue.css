@@ -1,0 +1,240 @@
+.new-issue-div {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  animation: fade-in 0.2s ease-in-out forwards;
+}
+
+.new-issue {
+  position: fixed;
+  border: 1px solid var(--color-border-quaternary);
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 40px,
+    rgba(0, 0, 0, 0.184) 0px 3px 20px, rgba(0, 0, 0, 0.184) 0px 3px 12px,
+    rgba(0, 0, 0, 0.184) 0px 2px 8px, rgba(0, 0, 0, 0.184) 0px 1px 1px;
+
+  color: var(--color-text-quaternary);
+
+  display: flex;
+}
+
+.smallWindow {
+  /* smolll new-issue */
+  top: 10%;
+  min-height: 250px;
+  width: 750px;
+}
+
+.largeWindow {
+  /* giant new-issue */
+  top: 5%;
+  min-height: 600px;
+  width: 800px;
+}
+
+.button-box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 4px -1px,
+    rgba(0, 0, 0, 0.118) 0px 1px 1px 0px;
+}
+
+.new-issue-form {
+  /* this ones for form tag */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+*:focus {
+  outline: none;
+}
+
+.issue-description {
+  /* issue description input */
+  width: 100%;
+  flex-grow: 1;
+  display: block;
+  unicode-bidi: isolate;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
+  resize: none;
+}
+
+.openSlide {
+  /* create more button */
+  animation: sliding-right 0.2s ease-in-out forwards;
+}
+
+.closeSlide {
+  /* also for create more button */
+  animation: sliding-left 0.2s ease-in-out forwards;
+}
+
+@keyframes sliding-right {
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(90%);
+  }
+}
+
+@keyframes sliding-left {
+  0% {
+    transform: translateX(90%);
+  }
+  100% {
+    transform: translateX(10%);
+  }
+}
+
+@keyframes window-grow {
+  0% {
+    width: 750px;
+    height: 250px;
+  }
+
+  100% {
+    transform: translateX(-10px);
+    top: 5%;
+    width: 800px;
+    height: 600px;
+  }
+}
+
+@keyframes window-shrink {
+  0% {
+    top: 5%;
+    width: 800px;
+    height: 600px;
+  }
+  100% {
+    width: 750px;
+    height: 250px;
+    top: 10%;
+  }
+}
+
+@keyframes popping-in {
+  0% {
+    height: 0;
+  }
+}
+
+.footer {
+  height: 56px;
+  justify-self: flex-end;
+}
+
+.relative-div:hover .hover-div {
+  /* small description for buttons at the bottom */
+  visibility: visible;
+  opacity: 1;
+}
+
+.relative-div .hover-div {
+  min-width: max-content;
+  height: max-content;
+  position: absolute;
+  margin-bottom: -65px;
+  left: -10%;
+  padding: 3px 5px;
+
+  font-size: var(--font-size-small);
+
+  background-color: var(--color-bg-secondary);
+
+  border: 1px solid var(--color-border-quaternary);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.281) 0px 4px 4px -1px,
+    rgba(0, 0, 0, 0.342) 0px 1px 1px 0px;
+  visibility: hidden;
+}
+
+.add-box-main {
+  position: absolute;
+  z-index: 200;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-quaternary);
+  border-radius: 5px;
+  font-size: 0.875rem;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fade-in 0.1s ease-in-out forwards;
+  margin-top: 2px;
+
+  box-shadow: rgba(0, 0, 0, 0.447) 0px 4px 4px -1px,
+    rgba(0, 0, 0, 0.491) 0px 1px 1px 0px;
+}
+
+input:checked {
+  background-color: var(--color-decoration-purple);
+}
+
+.custom-checkbox input {
+  z-index: 100;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-checkbox .checkmark {
+  position: relative;
+  height: 13px;
+  width: 13px;
+  border-radius: 3px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+  padding: 5px;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: var(--focus-color);
+}
+
+.custom-checkbox input:not(:checked):hover ~ .checkmark,
+.custom-checkbox .checkmark:hover {
+  border: 1px solid var(--focus-color);
+}
+
+.custom-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.custom-checkbox .checkmark::after {
+  left: 30%;
+  top: 10%;
+  bottom: 80%;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    background-color: red;
+  }
+  100% {
+    opacity: 0;
+  }
+}
