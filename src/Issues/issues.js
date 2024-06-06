@@ -68,19 +68,21 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
   const [canceledIssues, setCanceledIssues] = useState([]);
   const [duplicateIssues, setDuplicateIssues] = useState([]);
   const [issueToReturn, setIssueToReturn] = useState([]);
+  const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(false); //checks if any other box is open
 
   // Fetches issues from db according to their status
   const getIssues = async (status, setArray) => {
     try {
+      console.log(status);
       const response = await axios.get(
-        "http://localhost:3001/issues/get-todo",
-        { issueStatus: status }
+        `http://localhost:3001/issues/get-issues/${status}`
       );
       setArray(response.data);
     } catch (error) {
-      console.error("Error creating workspace:", error);
+      console.error("Error fetching issues:", error);
     }
   };
+
   useEffect(() => {
     getIssues("Todo", setTodoIssues);
     getIssues("InProgress", setInProgressIssues);
@@ -93,21 +95,66 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
   useEffect(() => {
     if (issueToBeDisplayed === "all") {
       setIssueToReturn([
-        <InProgressIssues key="inProgress" issueArray={inProgressIssues} />,
-        <TodoIssues key="todo" issueArray={todoIssues} />,
-        <BacklogIssues key="backlog" issueArray={backlogIssues} />,
-        <DoneIssues key="done" issueArray={doneIssues} />,
-        <CanceledIssues key="canceled" issueArray={canceledIssues} />,
-        <DuplicateIssues key="duplicate" issueArray={duplicateIssues} />,
+        <IssueBasicSyntax
+          key="inProgress"
+          issueArray={inProgressIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="todo"
+          issueArray={todoIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="backlog"
+          issueArray={backlogIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="done"
+          issueArray={doneIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="canceled"
+          issueArray={canceledIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="duplicate"
+          issueArray={duplicateIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
       ]);
     } else if (issueToBeDisplayed === "active") {
       setIssueToReturn([
-        <InProgressIssues key="inProgress" issueArray={inProgressIssues} />,
-        <TodoIssues key="todo" issueArray={todoIssues} />,
+        <IssueBasicSyntax
+          key="inProgress"
+          issueArray={inProgressIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
+        <IssueBasicSyntax
+          key="todo"
+          issueArray={todoIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
       ]);
     } else if (issueToBeDisplayed === "backlog") {
       setIssueToReturn([
-        <BacklogIssues key="backlog" issueArray={backlogIssues} />,
+        <IssueBasicSyntax
+          key="backlog"
+          issueArray={backlogIssues}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+        />,
       ]);
     }
   }, [
@@ -166,28 +213,4 @@ function FilterDisplaySection() {
       </button>
     </div>
   );
-}
-
-function InProgressIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
-}
-
-function TodoIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
-}
-
-function DoneIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
-}
-
-function BacklogIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
-}
-
-function CanceledIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
-}
-
-function DuplicateIssues({ issueArray }) {
-  return <IssueBasicSyntax issueArray={issueArray} />;
 }

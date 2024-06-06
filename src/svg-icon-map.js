@@ -50,7 +50,4 @@ export const labelIconMap = {
 
 export const projectIconMap = {
   "No Project": <ProjectSvg />,
-  Project: <ProjectSvg />,
-  Noct: <ProjectSvg />,
-  No: <ProjectSvg />,
 };

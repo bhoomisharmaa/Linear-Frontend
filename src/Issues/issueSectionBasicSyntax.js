@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { PlusSvg, NoAssignee } from "../svg-icons/more-icons";
 import { statusIconMap, priorityIconMap } from "../svg-icon-map";
+import AdditionBoxes from "../New Issue/small-addition-boxes";
+import { useEffect, useState } from "react";
 
 function IssueHeader({ issueName, IssueSvg, issueCount }) {
   return (
@@ -17,7 +19,11 @@ function IssueHeader({ issueName, IssueSvg, issueCount }) {
   );
 }
 
-export default function IssueBasicSyntax({ issueArray }) {
+export default function IssueBasicSyntax({
+  issueArray,
+  isSmallBoxClosed,
+  setIsSmallBoxClosed,
+}) {
   return (
     <div className="h-max w-full flex flex-col">
       {issueArray.length > 0 ? (
@@ -28,32 +34,79 @@ export default function IssueBasicSyntax({ issueArray }) {
             issueCount={issueArray.length}
           />
           {issueArray.map((issue) => (
-            <Link
-              to={`/${issue.name}`}
+            <div
               key={issue.index}
               className="issueee flex justify-between items-center h-[var(--issue-section-height)] px-6"
             >
               <div className="flex items-center gap-2">
-                <button>{priorityIconMap[issue.priority]}</button>
+                <ButtonDiv
+                  isSmallBoxClosed={isSmallBoxClosed}
+                  setIsSmallBoxClosed={setIsSmallBoxClosed}
+                  issue={issue}
+                  iconMap={priorityIconMap}
+                  iconName={issue.priority}
+                />
                 <span className="text-[var(--color-text-tertiary)] font-small">
                   TIE-{issue.index}
                 </span>
-                <button className="hover:brightness-200">
-                  {statusIconMap[issue.status]}
-                </button>
+                <ButtonDiv
+                  isSmallBoxClosed={isSmallBoxClosed}
+                  setIsSmallBoxClosed={setIsSmallBoxClosed}
+                  issue={issue}
+                  iconMap={statusIconMap}
+                  iconName={issue.status}
+                />
                 <span className="font-medium">{issue.name}</span>
               </div>
               <div className="flex items-center gap-2 text-[var(--color-text-tertiary)] font-small">
-                <span>{issue.dateCreated}</span>
-                <span>{issue.dateUpdated}</span>
+                <span>{issue.createdAt}</span>
+                <span>{issue.updatedAt}</span>
                 <button>{<NoAssignee />}</button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       ) : (
         ""
       )}
     </div>
+  );
+}
+
+function ButtonDiv({
+  isSmallBoxClosed,
+  setIsSmallBoxClosed,
+  iconMap,
+  iconName,
+}) {
+  const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
+  const [isChecked, setIsChecked] = useState(true);
+
+  useEffect(() => {
+    setIsSmallBoxClosed(!showAdditionBox);
+    console.log(!showAdditionBox);
+  }, [showAdditionBox]);
+  return (
+    <button
+      className="relative"
+      onClick={() => {
+        setShowAdditionBox(isSmallBoxClosed);
+        console.log(isSmallBoxClosed);
+      }}
+    >
+      {iconMap[iconName]}
+      {showAdditionBox && (
+        <AdditionBoxes
+          key={iconName}
+          iconMap={iconMap}
+          stuff={iconName}
+          changingStuff={"Change Priority"}
+          isSmallerView={true}
+          setShowAdditionBox={setShowAdditionBox}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+        />
+      )}
+    </button>
   );
 }
