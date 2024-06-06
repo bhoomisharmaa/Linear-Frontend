@@ -73,7 +73,6 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
   // Fetches issues from db according to their status
   const getIssues = async (status, setArray) => {
     try {
-      console.log(status);
       const response = await axios.get(
         `http://localhost:3001/issues/get-issues/${status}`
       );

@@ -73,7 +73,10 @@ export default function AdditionBoxes({
                 type="button"
                 id={icon}
                 className="flex justify-between hover:bg-[#63676d4f] px-1.5 py-[3px] rounded"
-                onClick={() => handleIconClick(icon)}
+                onClick={() => {
+                  handleIconClick(icon);
+                  console.log(icon);
+                }}
               >
                 <div className="flex gap-2 items-center">
                   {iconMap[icon]}

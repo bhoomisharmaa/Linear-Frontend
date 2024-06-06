@@ -3,6 +3,7 @@ import { PlusSvg, NoAssignee } from "../svg-icons/more-icons";
 import { statusIconMap, priorityIconMap } from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 function IssueHeader({ issueName, IssueSvg, issueCount }) {
   return (
@@ -45,6 +46,8 @@ export default function IssueBasicSyntax({
                   issue={issue}
                   iconMap={priorityIconMap}
                   iconName={issue.priority}
+                  issueIndex={issue.index}
+                  updateKey={"priority"}
                 />
                 <span className="text-[var(--color-text-tertiary)] font-small">
                   TIE-{issue.index}
@@ -55,6 +58,8 @@ export default function IssueBasicSyntax({
                   issue={issue}
                   iconMap={statusIconMap}
                   iconName={issue.status}
+                  issueIndex={issue.index}
+                  updateKey={"status"}
                 />
                 <span className="font-medium">{issue.name}</span>
               </div>
@@ -78,6 +83,8 @@ function ButtonDiv({
   setIsSmallBoxClosed,
   iconMap,
   iconName,
+  issueIndex,
+  updateKey,
 }) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
   const [isChecked, setIsChecked] = useState(true);
@@ -86,11 +93,27 @@ function ButtonDiv({
     setIsSmallBoxClosed(!showAdditionBox);
   }, [showAdditionBox]);
 
+  const updateIssue = async (updateItem) => {
+    try {
+      console.log(updateKey + " " + updateItem);
+      const response = await axios.post(
+        `http://localhost:3001/issues/update-issues/${issueIndex}`,
+        {
+          updateKey,
+          updateItem,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Error updating issue:", error);
+    }
+  };
+
   return (
     <div className="relative">
       <button
         onClick={() => {
-          setShowAdditionBox(!isSmallBoxClosed);
+          setShowAdditionBox(isSmallBoxClosed);
         }}
       >
         {iconMap[iconName]}
@@ -101,6 +124,7 @@ function ButtonDiv({
           key={iconName}
           iconMap={iconMap}
           stuff={iconName}
+          setStuff={updateIssue}
           changingStuff={"Change Priority"}
           isSmallerView={true}
           setShowAdditionBox={setShowAdditionBox}
