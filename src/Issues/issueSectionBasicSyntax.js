@@ -84,17 +84,18 @@ function ButtonDiv({
 
   useEffect(() => {
     setIsSmallBoxClosed(!showAdditionBox);
-    console.log(!showAdditionBox);
   }, [showAdditionBox]);
+
   return (
-    <button
-      className="relative"
-      onClick={() => {
-        setShowAdditionBox(isSmallBoxClosed);
-        console.log(isSmallBoxClosed);
-      }}
-    >
-      {iconMap[iconName]}
+    <div className="relative">
+      <button
+        onClick={() => {
+          setShowAdditionBox(!isSmallBoxClosed);
+        }}
+      >
+        {iconMap[iconName]}
+      </button>
+
       {showAdditionBox && (
         <AdditionBoxes
           key={iconName}
@@ -107,6 +108,6 @@ function ButtonDiv({
           setIsChecked={setIsChecked}
         />
       )}
-    </button>
+    </div>
   );
 }
