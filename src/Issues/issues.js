@@ -69,6 +69,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
   const [duplicateIssues, setDuplicateIssues] = useState([]);
   const [issueToReturn, setIssueToReturn] = useState([]);
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(false); //checks if any other box is open
+  const [issueIsChanged, setIssueIsChanged] = useState(false);
 
   // Fetches issues from db according to their status
   const getIssues = async (status, setArray) => {
@@ -89,7 +90,8 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
     getIssues("Done", setDoneIssues);
     getIssues("Canceled", setCanceledIssues);
     getIssues("Duplicate", setDuplicateIssues);
-  }, []);
+    setIssueIsChanged(false);
+  }, [issueIsChanged]);
 
   useEffect(() => {
     if (issueToBeDisplayed === "all") {
@@ -97,36 +99,42 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
         <IssueBasicSyntax
           key="inProgress"
           issueArray={inProgressIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="todo"
           issueArray={todoIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="backlog"
           issueArray={backlogIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="done"
           issueArray={doneIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="canceled"
           issueArray={canceledIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="duplicate"
           issueArray={duplicateIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
@@ -136,12 +144,14 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
         <IssueBasicSyntax
           key="inProgress"
           issueArray={inProgressIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
         <IssueBasicSyntax
           key="todo"
           issueArray={todoIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,
@@ -151,6 +161,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
         <IssueBasicSyntax
           key="backlog"
           issueArray={backlogIssues}
+          setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
         />,

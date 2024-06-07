@@ -1,6 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { PlusSvg, NoAssignee } from "../svg-icons/more-icons";
-import { statusIconMap, priorityIconMap } from "../svg-icon-map";
+import {
+  statusIconMap,
+  priorityIconMap,
+  labelIconMap,
+  projectIconMap,
+} from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -22,9 +27,16 @@ function IssueHeader({ issueName, IssueSvg, issueCount }) {
 
 export default function IssueBasicSyntax({
   issueArray,
+  setIssueArray,
   isSmallBoxClosed,
   setIsSmallBoxClosed,
 }) {
+  const dateFormatter = (dateStr) => {
+    const date = new Date(dateStr);
+    const options = { month: "long", day: "numeric" };
+    const formatedDate = date.toLocaleDateString("en-US", options);
+    return formatedDate;
+  };
   return (
     <div className="h-max w-full flex flex-col">
       {issueArray.length > 0 ? (
@@ -48,6 +60,8 @@ export default function IssueBasicSyntax({
                   iconName={issue.priority}
                   issueIndex={issue.index}
                   updateKey={"priority"}
+                  issueArray={issueArray}
+                  setIssueArray={setIssueArray}
                 />
                 <span className="text-[var(--color-text-tertiary)] font-small">
                   TIE-{issue.index}
@@ -60,12 +74,29 @@ export default function IssueBasicSyntax({
                   iconName={issue.status}
                   issueIndex={issue.index}
                   updateKey={"status"}
+                  setIssueArray={setIssueArray}
                 />
                 <span className="font-medium">{issue.name}</span>
               </div>
               <div className="flex items-center gap-2 text-[var(--color-text-tertiary)] font-small">
-                <span>{issue.createdAt}</span>
-                <span>{issue.updatedAt}</span>
+                {issue.label && (
+                  <div className="px-2 bg-[var(--background-color)] border-[1px] border-[var(--color-border-tertiary)] rounded-xl">
+                    <ButtonDiv
+                      isSmallBoxClosed={isSmallBoxClosed}
+                      setIsSmallBoxClosed={setIsSmallBoxClosed}
+                      issue={issue}
+                      iconMap={labelIconMap}
+                      iconName={issue.label}
+                      issueIndex={issue.index}
+                      updateKey={"label"}
+                      issueArray={issueArray}
+                      setIssueArray={setIssueArray}
+                    />
+                  </div>
+                )}
+
+                <span>{dateFormatter(issue.createdAt)}</span>
+                <span>{dateFormatter(issue.updatedAt)}</span>
                 <button>{<NoAssignee />}</button>
               </div>
             </div>
@@ -85,9 +116,11 @@ function ButtonDiv({
   iconName,
   issueIndex,
   updateKey,
+  setIssueArray,
 }) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
   const [isChecked, setIsChecked] = useState(true);
+  console.log(iconName);
 
   useEffect(() => {
     setIsSmallBoxClosed(!showAdditionBox);
@@ -95,15 +128,14 @@ function ButtonDiv({
 
   const updateIssue = async (updateItem) => {
     try {
-      console.log(updateKey + " " + updateItem);
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:3001/issues/update-issues/${issueIndex}`,
         {
           updateKey,
           updateItem,
         }
       );
-      console.log(response);
+      setIssueArray(true);
     } catch (error) {
       console.error("Error updating issue:", error);
     }
@@ -112,11 +144,13 @@ function ButtonDiv({
   return (
     <div className="relative">
       <button
+        className="flex items-center gap-1.5"
         onClick={() => {
           setShowAdditionBox(isSmallBoxClosed);
         }}
       >
         {iconMap[iconName]}
+        {updateKey === "label" && <span>{iconName}</span>}
       </button>
 
       {showAdditionBox && (
@@ -125,7 +159,7 @@ function ButtonDiv({
           iconMap={iconMap}
           stuff={iconName}
           setStuff={updateIssue}
-          changingStuff={"Change Priority"}
+          changingStuff={`Change ${updateKey}`}
           isSmallerView={true}
           setShowAdditionBox={setShowAdditionBox}
           isChecked={isChecked}

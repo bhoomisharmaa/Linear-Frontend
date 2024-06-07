@@ -57,7 +57,7 @@ export default function AdditionBoxes({
       )}
       <div onClick={handleButtonClick}>
         {filteredArray.map((icon, index) =>
-          changingStuff === "Add label" ? (
+          changingStuff === "Add label" || changingStuff === "Change label" ? (
             <TickBoxForm
               key={icon}
               iconMap={iconMap}
@@ -75,7 +75,6 @@ export default function AdditionBoxes({
                 className="flex justify-between hover:bg-[#63676d4f] px-1.5 py-[3px] rounded"
                 onClick={() => {
                   handleIconClick(icon);
-                  console.log(icon);
                 }}
               >
                 <div className="flex gap-2 items-center">
