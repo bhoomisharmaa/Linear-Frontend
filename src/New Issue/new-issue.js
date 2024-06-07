@@ -19,14 +19,43 @@ import {
 import ProjectSvg from "../svg-icons/projects";
 import { useEffect, useRef, useState } from "react";
 import AdditionBoxes from "./small-addition-boxes";
+import axios from "axios";
 
 export default function NewIssue({ teamCode, handleNewIssueVisibility }) {
   const [isSmallerView, setIsSmallerView] = useState(true);
   const [animationName, setAnimationName] = useState("");
+  // Those small buttons at the botton which sets status and priority stuff
+  const [issueStatus, setIssueStatus] = useState("Backlog");
+  const [issuePriority, setIssuePriority] = useState("No");
+  const [issueAssignee, setIssueAssignee] = useState("Assignee");
+  const [issueLabel, setIssueLabel] = useState("");
+  const [issueProject, setIssueProject] = useState("No Project");
+  const [issueTitle, setIssueTitle] = useState("");
+  const [issueDescription, setIssueDescription] = useState("");
   const handleBoxAnimation = () => {
     if (isSmallerView)
       setAnimationName("window-grow 0.5s ease-in-out forwards");
     else setAnimationName("window-shrink 0.5s ease-in-out forwards");
+  };
+  const createIssue = async (event) => {
+    try {
+      const issue = await axios.post(
+        "http://localhost:3001/issues/create-issues",
+        {
+          data: {
+            name: issueTitle,
+            description: issueDescription,
+            status: issueStatus,
+            createdAt: new Date(),
+            priority: issuePriority,
+            label: issueLabel,
+          },
+        }
+      );
+      console.log(issue);
+    } catch (error) {
+      console.error("Error creating issue:", error);
+    }
   };
   return (
     <div className="new-issue-div">
@@ -37,7 +66,10 @@ export default function NewIssue({ teamCode, handleNewIssueVisibility }) {
         style={{ animation: animationName }}
         open
       >
-        <form className={`new-issue-form `}>
+        <form
+          className={`new-issue-form `}
+          onSubmit={(event) => createIssue(event)}
+        >
           <div className="h-full flex flex-col grow">
             <Header
               teamCode={teamCode}
@@ -46,8 +78,25 @@ export default function NewIssue({ teamCode, handleNewIssueVisibility }) {
               handleNewIssueVisibility={handleNewIssueVisibility}
               handleBoxAnimation={handleBoxAnimation}
             />
-            <InputArea />
-            <InfoButtons isSmallerView={isSmallerView} />
+            <InputArea
+              issueDescription={issueDescription}
+              setIssueDescription={setIssueDescription}
+              issueTitle={issueTitle}
+              setIssueTitle={setIssueTitle}
+            />
+            <InfoButtons
+              isSmallerView={isSmallerView}
+              issueAssignee={issueAssignee}
+              setIssueAssignee={setIssueAssignee}
+              issueLabel={issueLabel}
+              setIssueLabel={setIssueLabel}
+              issuePriority={issuePriority}
+              setIssuePriority={setIssuePriority}
+              issueStatus={issueStatus}
+              setIssueStatus={setIssueStatus}
+              issueProject={issueProject}
+              setIssueProject={setIssueProject}
+            />
             <Footer />
           </div>
         </form>
@@ -119,13 +168,19 @@ function Footer() {
   );
 }
 
-function InfoButtons({ isSmallerView }) {
-  // Those small buttons at the botton which sets status and priority stuff
-  const [issueStatus, setIssueStatus] = useState("Backlog");
-  const [issuePriority, setIssuePriority] = useState("No");
-  const [issueAssignee, setIssueAssignee] = useState("Assignee");
-  const [issueLabel, setIssueLabel] = useState("");
-  const [issueProject, setIssueProject] = useState("No Project");
+function InfoButtons({
+  isSmallerView,
+  issueAssignee,
+  setIssueAssignee,
+  issueStatus,
+  setIssueStatus,
+  issueLabel,
+  setIssueLabel,
+  issueProject,
+  setIssueProject,
+  issuePriority,
+  setIssuePriority,
+}) {
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(true); //checks if any other box is open
 
   return (
@@ -240,28 +295,27 @@ function AddStuffButtons({
   );
 }
 
-function InputArea() {
-  // both issue and description input area
-  const ref = useRef < HTMLTextAreaElement > null;
-
-  const handleInput = (e) => {
-    if (ref.current) {
-      ref.current.style.height = "auto";
-      ref.current.style.height = `${e.target.scrollHeight - 16}px`;
-    }
-  };
-
+function InputArea({
+  issueTitle,
+  setIssueTitle,
+  issueDescription,
+  setIssueDescription,
+}) {
   return (
     <div className="flex flex-col gap-1.5 grow text-[var(--color-text-primary)]">
       <input
+        aria-label="issue-title"
         className="bg-[var(--color-bg-secondary)] px-3.5 text-lg font-medium"
+        value={issueTitle}
         placeholder="Issue Title"
+        onChange={(event) => setIssueTitle(event.target.value)}
       />
       <textarea
-        className="issue-description px-3.5 bg-[var(--color-bg-secondary)] text-sm text-wrap grow "
+        aria-label="issue-description"
+        className="issue-description px-3.5 bg-[var(--color-bg-secondary)] text-sm text-wrap grow"
+        value={issueDescription}
         placeholder="Add description..."
-        rows={1}
-        onInput={handleInput}
+        onChange={(event) => setIssueDescription(event.stopPropagation.value)}
       />
     </div>
   );
