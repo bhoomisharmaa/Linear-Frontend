@@ -14,3 +14,8 @@
   font-size: var(--font-size-largePlus);
   font-weight: 500;
 }
+
+.font-mini-300 {
+  font-size: var(--font-size-mini);
+  font-weight: 300;
+}

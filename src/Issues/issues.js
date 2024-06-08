@@ -14,28 +14,38 @@ import IssueBasicSyntax from "./issueSectionBasicSyntax";
 import { Route, Routes } from "react-router-dom";
 import axios, { all } from "axios";
 
-export default function Issues({ handleNewIssueVisibility }) {
+export default function Issues({
+  handleNewIssueVisibility,
+  teamName,
+  teamIndex,
+  teamIdentifier,
+}) {
   return (
     <Routes>
       <Route
-        path="/issues"
+        path={`/team/${teamIdentifier}/all`}
         element={
-          <AllIssuesPage handleNewIssueVisibility={handleNewIssueVisibility} />
-        }
-      ></Route>
-      <Route
-        path="/issues/active"
-        element={
-          <ActiveIssuesPage
+          <AllIssuesPage
             handleNewIssueVisibility={handleNewIssueVisibility}
+            teamIndex={teamIndex}
           />
         }
       ></Route>
       <Route
-        path="/issues/backlog"
+        path={`/team/${teamIdentifier}/active`}
+        element={
+          <ActiveIssuesPage
+            handleNewIssueVisibility={handleNewIssueVisibility}
+            teamIndex={teamIndex}
+          />
+        }
+      ></Route>
+      <Route
+        path={`/team/${teamIdentifier}/backlog`}
         element={
           <BacklogIssuesPage
             handleNewIssueVisibility={handleNewIssueVisibility}
+            teamIndex={teamIndex}
           />
         }
       ></Route>
@@ -43,7 +53,7 @@ export default function Issues({ handleNewIssueVisibility }) {
   );
 }
 
-function AllIssuesPage({ handleNewIssueVisibility }) {
+function AllIssuesPage({ handleNewIssueVisibility, teamIndex }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
       <Header headerName={"All issues"} />
@@ -54,12 +64,13 @@ function AllIssuesPage({ handleNewIssueVisibility }) {
           <NoAllIssues handleNewIssueVisibility={handleNewIssueVisibility} />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIndex={teamIndex}
       />
     </div>
   );
 }
 
-function ActiveIssuesPage({ handleNewIssueVisibility }) {
+function ActiveIssuesPage({ handleNewIssueVisibility, teamIndex }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Active issues"} />
@@ -70,12 +81,13 @@ function ActiveIssuesPage({ handleNewIssueVisibility }) {
           <NoActiveIssues handleNewIssueVisibility={handleNewIssueVisibility} />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIndex={teamIndex}
       />
     </div>
   );
 }
 
-function BacklogIssuesPage({ handleNewIssueVisibility }) {
+function BacklogIssuesPage({ handleNewIssueVisibility, teamIndex }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Backlog issues"} />
@@ -88,6 +100,7 @@ function BacklogIssuesPage({ handleNewIssueVisibility }) {
           />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIndex={teamIndex}
       />
     </div>
   );
@@ -97,6 +110,7 @@ function IssueSection({
   issueToBeDisplayed,
   NoIssuePage,
   handleNewIssueVisibility,
+  teamIndex,
 }) {
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [todoIssues, setTodoIssues] = useState([]);
@@ -112,7 +126,7 @@ function IssueSection({
   const getIssues = async (status, setArray) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/issues/get-issues/${status}`
+        `http://localhost:3001/issues/${teamIndex}/get-issues/${status}`
       );
       setArray(response.data);
     } catch (error) {
@@ -140,6 +154,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -148,6 +163,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="backlog"
@@ -156,6 +172,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="done"
@@ -164,6 +181,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="canceled"
@@ -172,6 +190,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="duplicate"
@@ -180,6 +199,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
       ]);
     } else if (issueToBeDisplayed === "active") {
@@ -191,6 +211,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -199,6 +220,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
       ]);
     } else if (issueToBeDisplayed === "backlog") {
@@ -210,6 +232,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIndex={teamIndex}
         />,
       ]);
     }

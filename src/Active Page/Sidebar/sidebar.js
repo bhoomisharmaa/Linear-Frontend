@@ -5,7 +5,7 @@ import InboxSvg from "../../svg-icons/inbox";
 import MyIssueSvg from "../../svg-icons/my-issue";
 import ArrowDownSvg from "../../svg-icons/arrow-down";
 import ArrowUpSvg from "../../svg-icons/arrow-up";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewsSvg from "../../svg-icons/viwes";
 import RoadMapSvg from "../../svg-icons/roadmaps";
 import TeamsSvg from "../../svg-icons/teams";
@@ -14,7 +14,7 @@ import IssueSvg from "../../svg-icons/issues";
 import ProjectSvg from "../../svg-icons/projects";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar({ handleNewIssueVisibility }) {
+export default function Sidebar({ handleNewIssueVisibility, teams }) {
   return (
     <div className="sidebar">
       <HeaderDiv handleNewIssueVisibility={handleNewIssueVisibility} />
@@ -26,8 +26,9 @@ export default function Sidebar({ handleNewIssueVisibility }) {
           <MyIssueSvg /> My issues
         </button>
       </div>
-      <Workspace />
-      <YourTeams />
+      <Workspace teams={teams} />
+
+      <YourTeams teams={teams} />
     </div>
   );
 }
@@ -57,7 +58,7 @@ function HeaderDiv({ handleNewIssueVisibility }) {
   );
 }
 
-function Workspace() {
+function Workspace({ teams }) {
   const [isWorkSpaceOpen, setIsWorkSpaceOpen] = useState(true);
 
   return (
@@ -82,18 +83,17 @@ function Workspace() {
           <button className="buttons">
             <RoadMapSvg /> <span>Roadmap</span>
           </button>
-          <button className="buttons">
+          <NavLink to={"/teams"} className="buttons">
             <TeamsSvg /> <span>Teams</span>
-          </button>
+          </NavLink>
         </div>
       </div>
     </div>
   );
 }
 
-function YourTeams() {
+function YourTeams({ teams }) {
   const [isYourTeamOpen, setIsYourTeamOpen] = useState(true);
-  const [totalTeams, setTotalTeams] = useState(["Tierra"]);
 
   return (
     <div className="flex flex-col">
@@ -110,8 +110,12 @@ function YourTeams() {
             isYourTeamOpen ? "open" : "close"
           }`}
         >
-          {totalTeams.map((team, index) => (
-            <Teams teamName={team} key={index} />
+          {teams.map((team, index) => (
+            <Teams
+              teamName={team.team_name}
+              teamIdentifier={team.identifier}
+              key={index}
+            />
           ))}
         </div>
       </div>
@@ -119,7 +123,7 @@ function YourTeams() {
   );
 }
 
-function Teams({ teamName }) {
+function Teams({ teamName, teamIdentifier }) {
   const [isTeamOpen, setIsTeamOpen] = useState(true);
   return (
     <div className="flex flex-col">
@@ -141,14 +145,14 @@ function Teams({ teamName }) {
           }`}
         >
           <div className="flex flex-col">
-            <NavLink to={"/issues"} className="buttons">
+            <NavLink to={`/team/${teamIdentifier}/all`} className="buttons">
               <IssueSvg /> <span>Issues</span>
             </NavLink>
             <div className="issues-div">
-              <NavLink to={"/issues/active"} className="m-1">
+              <NavLink to={`/team/${teamIdentifier}/active`} className="m-1">
                 Active
               </NavLink>
-              <NavLink to={"issues/backlog"} className="m-1">
+              <NavLink to={`/team/${teamIdentifier}/backlog`} className="m-1">
                 Backlog
               </NavLink>
             </div>

@@ -1,0 +1,32 @@
+.buttons-team {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid rgb(44, 46, 51);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 4px -1px,
+    rgba(0, 0, 0, 0.118) 0px 1px 1px 0px;
+  background-color: var(--color-button-tertiary);
+  color: rgb(227, 228, 230);
+  font-size: var(--font-size-mini);
+}
+
+.third-col,
+.teams-des {
+  height: 32px;
+  padding-left: 32px;
+  padding-right: 22px;
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+  border-bottom: 1px solid rgb(35, 37, 42);
+}
+
+.teams-des {
+  height: 48px;
+}
+
+.third-col div {
+  flex-grow: 1;
+}

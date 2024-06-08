@@ -25,6 +25,7 @@ export default function NewIssue({
   teamCode,
   handleNewIssueVisibility,
   defaultStatus,
+  teamIndex,
 }) {
   const [isSmallerView, setIsSmallerView] = useState(true);
   const [animationName, setAnimationName] = useState("");
@@ -43,10 +44,10 @@ export default function NewIssue({
       setAnimationName("window-grow 0.5s ease-in-out forwards");
     else setAnimationName("window-shrink 0.5s ease-in-out forwards");
   };
-  const createIssue = async (event) => {
+  const createIssue = async () => {
     try {
       const issue = await axios.post(
-        "http://localhost:3001/issues/create-issues",
+        `http://localhost:3001/issues/${teamIndex}/create-issues`,
         {
           data: {
             name: issueTitle,
@@ -72,10 +73,7 @@ export default function NewIssue({
         style={{ animation: animationName }}
         open
       >
-        <form
-          className={`new-issue-form `}
-          onSubmit={(event) => createIssue(event)}
-        >
+        <form className={`new-issue-form `} onSubmit={createIssue}>
           <div className="h-full flex flex-col grow">
             <Header
               teamCode={teamCode}

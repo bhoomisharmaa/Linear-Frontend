@@ -39,6 +39,7 @@ export default function IssueBasicSyntax({
   isSmallBoxClosed,
   setIsSmallBoxClosed,
   handleNewIssueVisibility,
+  teamIndex,
 }) {
   const dateFormatter = (dateStr) => {
     const date = new Date(dateStr);
@@ -72,6 +73,7 @@ export default function IssueBasicSyntax({
                   updateKey={"priority"}
                   issueArray={issueArray}
                   setIssueArray={setIssueArray}
+                  teamIndex={teamIndex}
                 />
                 <span className="text-[var(--color-text-tertiary)] font-small">
                   TIE-{issue.index}
@@ -85,6 +87,7 @@ export default function IssueBasicSyntax({
                   issueIndex={issue.index}
                   updateKey={"status"}
                   setIssueArray={setIssueArray}
+                  teamIndex={teamIndex}
                 />
                 <span className="font-medium">{issue.name}</span>
               </div>
@@ -101,6 +104,7 @@ export default function IssueBasicSyntax({
                       updateKey={"label"}
                       issueArray={issueArray}
                       setIssueArray={setIssueArray}
+                      teamIndex={teamIndex}
                     />
                   </div>
                 )}
@@ -127,6 +131,7 @@ function ButtonDiv({
   issueIndex,
   updateKey,
   setIssueArray,
+  teamIndex,
 }) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
   const [isChecked, setIsChecked] = useState(true);
@@ -138,7 +143,7 @@ function ButtonDiv({
   const updateIssue = async (updateItem) => {
     try {
       await axios.post(
-        `http://localhost:3001/issues/update-issues/${issueIndex}`,
+        `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
         {
           updateKey,
           updateItem,
