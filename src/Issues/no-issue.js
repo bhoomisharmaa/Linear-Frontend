@@ -6,7 +6,7 @@ import {
   BacklogSvg,
 } from "../svg-icons/status";
 
-export function NoActiveIssues() {
+export function NoActiveIssues({ handleNewIssueVisibility }) {
   return (
     <div className="no-issue-main ">
       <div className="w-[480px] bg-[var(--color-bg-quinary)] h-max flex flex-col gap-8 cursor-default border rounded-lg border-[var(--color-border-quaternary)] p-11 m-12">
@@ -26,7 +26,10 @@ export function NoActiveIssues() {
             on, or when they should be picked up in the next cycle.
           </p>
         </div>
-        <button className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125">
+        <button
+          className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125"
+          onClick={() => handleNewIssueVisibility("Todo")}
+        >
           Create a new issue
         </button>
       </div>
@@ -34,7 +37,7 @@ export function NoActiveIssues() {
   );
 }
 
-export function NoAllIssues() {
+export function NoAllIssues({ handleNewIssueVisibility }) {
   return (
     <div className="no-issue-main ">
       <div className="w-[480px] bg-[var(--color-bg-quinary)] h-max flex flex-col gap-8 cursor-default border rounded-lg border-[var(--color-border-quaternary)] p-11 m-12">
@@ -55,7 +58,10 @@ export function NoAllIssues() {
             here.
           </p>
         </div>
-        <button className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125">
+        <button
+          className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125"
+          onClick={() => handleNewIssueVisibility("Todo")}
+        >
           Create a new issue
         </button>
       </div>
@@ -63,7 +69,7 @@ export function NoAllIssues() {
   );
 }
 
-export function NoBacklogIssues() {
+export function NoBacklogIssues({ handleNewIssueVisibility }) {
   return (
     <div className="no-issue-main ">
       <div className="w-[480px] bg-[var(--color-bg-quinary)] h-max flex flex-col gap-8 cursor-default border rounded-lg border-[var(--color-border-quaternary)] p-11 m-12">
@@ -82,7 +88,10 @@ export function NoBacklogIssues() {
             the backlog by setting their statuses or adding them to a Cycle.
           </p>
         </div>
-        <button className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125">
+        <button
+          className="w-max bg-[var(--focus-color)] button-box-shadow border border-[#7a83d4] text-[var(--color-text-primary)] font-smallPlus font-medium rounded-md px-4 py-1.5 hover:brightness-125"
+          onClick={() => handleNewIssueVisibility("Backlog")}
+        >
           Create a new issue
         </button>
       </div>

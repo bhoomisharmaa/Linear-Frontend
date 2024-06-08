@@ -17,50 +17,87 @@ import axios, { all } from "axios";
 export default function Issues({ handleNewIssueVisibility }) {
   return (
     <Routes>
-      <Route path="/issues" element={<AllIssuesPage />}></Route>
-      <Route path="/issues/active" element={<ActiveIssuesPage />}></Route>
-      <Route path="/issues/backlog" element={<BacklogIssuesPage />}></Route>
+      <Route
+        path="/issues"
+        element={
+          <AllIssuesPage handleNewIssueVisibility={handleNewIssueVisibility} />
+        }
+      ></Route>
+      <Route
+        path="/issues/active"
+        element={
+          <ActiveIssuesPage
+            handleNewIssueVisibility={handleNewIssueVisibility}
+          />
+        }
+      ></Route>
+      <Route
+        path="/issues/backlog"
+        element={
+          <BacklogIssuesPage
+            handleNewIssueVisibility={handleNewIssueVisibility}
+          />
+        }
+      ></Route>
     </Routes>
   );
 }
 
-function AllIssuesPage() {
+function AllIssuesPage({ handleNewIssueVisibility }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
       <Header headerName={"All issues"} />
       <FilterDisplaySection />
-      <IssueSection issueToBeDisplayed={"all"} NoIssuePage={<NoAllIssues />} />
+      <IssueSection
+        issueToBeDisplayed={"all"}
+        NoIssuePage={
+          <NoAllIssues handleNewIssueVisibility={handleNewIssueVisibility} />
+        }
+        handleNewIssueVisibility={handleNewIssueVisibility}
+      />
     </div>
   );
 }
 
-function ActiveIssuesPage() {
+function ActiveIssuesPage({ handleNewIssueVisibility }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Active issues"} />
       <FilterDisplaySection />
       <IssueSection
         issueToBeDisplayed={"active"}
-        NoIssuePage={<NoActiveIssues />}
+        NoIssuePage={
+          <NoActiveIssues handleNewIssueVisibility={handleNewIssueVisibility} />
+        }
+        handleNewIssueVisibility={handleNewIssueVisibility}
       />
     </div>
   );
 }
 
-function BacklogIssuesPage() {
+function BacklogIssuesPage({ handleNewIssueVisibility }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Backlog issues"} />
       <FilterDisplaySection />
       <IssueSection
         issueToBeDisplayed={"backlog"}
-        NoIssuePage={<NoBacklogIssues />}
+        NoIssuePage={
+          <NoBacklogIssues
+            handleNewIssueVisibility={handleNewIssueVisibility}
+          />
+        }
+        handleNewIssueVisibility={handleNewIssueVisibility}
       />
     </div>
   );
 }
 
-function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
+function IssueSection({
+  issueToBeDisplayed,
+  NoIssuePage,
+  handleNewIssueVisibility,
+}) {
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [todoIssues, setTodoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
@@ -102,6 +139,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -109,6 +147,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="backlog"
@@ -116,6 +155,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="done"
@@ -123,6 +163,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="canceled"
@@ -130,6 +171,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="duplicate"
@@ -137,6 +179,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
       ]);
     } else if (issueToBeDisplayed === "active") {
@@ -147,6 +190,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -154,6 +198,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
       ]);
     } else if (issueToBeDisplayed === "backlog") {
@@ -164,6 +209,7 @@ function IssueSection({ issueToBeDisplayed, NoIssuePage }) {
           setIssueArray={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
+          handleNewIssueVisibility={handleNewIssueVisibility}
         />,
       ]);
     }

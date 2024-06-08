@@ -10,7 +10,12 @@ import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function IssueHeader({ issueName, IssueSvg, issueCount }) {
+function IssueHeader({
+  issueName,
+  IssueSvg,
+  issueCount,
+  handleNewIssueVisibility,
+}) {
   return (
     <div className="issue-header flex items-center justify-between py-2">
       <div className="flex items-center gap-2">
@@ -18,7 +23,10 @@ function IssueHeader({ issueName, IssueSvg, issueCount }) {
         <span className="font-semibold text-md">{issueName}</span>
         <span className="align-center text-[#949496]">{issueCount}</span>
       </div>
-      <button className="buttons">
+      <button
+        className="buttons"
+        onClick={() => handleNewIssueVisibility(issueName)}
+      >
         <PlusSvg />
       </button>
     </div>
@@ -30,6 +38,7 @@ export default function IssueBasicSyntax({
   setIssueArray,
   isSmallBoxClosed,
   setIsSmallBoxClosed,
+  handleNewIssueVisibility,
 }) {
   const dateFormatter = (dateStr) => {
     const date = new Date(dateStr);
@@ -45,6 +54,7 @@ export default function IssueBasicSyntax({
             issueName={issueArray[0].status}
             IssueSvg={statusIconMap[issueArray[0].status]}
             issueCount={issueArray.length}
+            handleNewIssueVisibility={handleNewIssueVisibility}
           />
           {issueArray.map((issue) => (
             <div
@@ -120,7 +130,6 @@ function ButtonDiv({
 }) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
   const [isChecked, setIsChecked] = useState(true);
-  console.log(iconName);
 
   useEffect(() => {
     setIsSmallBoxClosed(!showAdditionBox);
@@ -135,6 +144,7 @@ function ButtonDiv({
           updateItem,
         }
       );
+      console.log(updateItem);
       setIssueArray(true);
     } catch (error) {
       console.error("Error updating issue:", error);

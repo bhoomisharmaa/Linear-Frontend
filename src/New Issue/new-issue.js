@@ -21,11 +21,17 @@ import { useEffect, useRef, useState } from "react";
 import AdditionBoxes from "./small-addition-boxes";
 import axios from "axios";
 
-export default function NewIssue({ teamCode, handleNewIssueVisibility }) {
+export default function NewIssue({
+  teamCode,
+  handleNewIssueVisibility,
+  defaultStatus,
+}) {
   const [isSmallerView, setIsSmallerView] = useState(true);
   const [animationName, setAnimationName] = useState("");
   // Those small buttons at the botton which sets status and priority stuff
-  const [issueStatus, setIssueStatus] = useState("Backlog");
+  const [issueStatus, setIssueStatus] = useState(
+    defaultStatus ? defaultStatus : "Backlog"
+  );
   const [issuePriority, setIssuePriority] = useState("No");
   const [issueAssignee, setIssueAssignee] = useState("Assignee");
   const [issueLabel, setIssueLabel] = useState("");

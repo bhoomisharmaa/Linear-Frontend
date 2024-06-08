@@ -6,8 +6,11 @@ import { useState } from "react";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
-  const handleNewIssueVisibility = () =>
+  const [defaultStatus, setDefaultStatus] = useState("");
+  const handleNewIssueVisibility = (newStatus) => {
     setIsNewIssueVisible(!isNewIssueVisible);
+    setDefaultStatus(newStatus);
+  };
   return (
     <div className="h-vh w-vh relative">
       <div className="acive-team-main">
@@ -20,6 +23,7 @@ export default function ActiveTeam() {
         <NewIssue
           teamCode={"TIE"}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          defaultStatus={defaultStatus}
         />
       )}
     </div>

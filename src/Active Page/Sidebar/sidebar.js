@@ -43,7 +43,7 @@ function HeaderDiv({ handleNewIssueVisibility }) {
         <div className="flex gap-2 justify-center">
           <button
             className="new-issue-button"
-            onClick={handleNewIssueVisibility}
+            onClick={() => handleNewIssueVisibility("Backlog")}
           >
             <NewIssueSvg />
             <p>New issue</p>
