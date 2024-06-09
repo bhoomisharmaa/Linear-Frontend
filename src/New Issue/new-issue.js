@@ -16,7 +16,6 @@ import {
   SmallerArrows,
   TheresMoreSvg,
 } from "../svg-icons/more-icons";
-import ProjectSvg from "../svg-icons/projects";
 import { useEffect, useRef, useState } from "react";
 import AdditionBoxes from "./small-addition-boxes";
 import axios from "axios";
@@ -59,21 +58,19 @@ export default function NewIssue({
           },
         }
       );
-      console.log(issue);
     } catch (error) {
       console.error("Error creating issue:", error);
     }
   };
   return (
-    <div className="new-issue-div">
+    <div className="new-anything-div">
       <dialog
-        className={`new-issue bg-[var(--color-bg-secondary)] ${
+        className={`new-anything bg-[var(--color-bg-secondary)] ${
           isSmallerView ? "smallWindow" : "largeWindow"
         }`}
         style={{ animation: animationName }}
-        open
       >
-        <form className={`new-issue-form `} onSubmit={createIssue}>
+        <form className={`new-anything-form `} onSubmit={createIssue}>
           <div className="h-full flex flex-col grow">
             <Header
               teamCode={teamCode}

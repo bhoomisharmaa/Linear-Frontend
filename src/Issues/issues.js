@@ -16,7 +16,6 @@ import axios, { all } from "axios";
 
 export default function Issues({
   handleNewIssueVisibility,
-  teamName,
   teamIndex,
   teamIdentifier,
 }) {

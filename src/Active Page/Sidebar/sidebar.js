@@ -14,7 +14,12 @@ import IssueSvg from "../../svg-icons/issues";
 import ProjectSvg from "../../svg-icons/projects";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar({ handleNewIssueVisibility, teams }) {
+export default function Sidebar({
+  handleNewIssueVisibility,
+  teams,
+  setActiveTeamIndex,
+  setActiveTeamIdentifier,
+}) {
   return (
     <div className="sidebar">
       <HeaderDiv handleNewIssueVisibility={handleNewIssueVisibility} />
@@ -28,7 +33,11 @@ export default function Sidebar({ handleNewIssueVisibility, teams }) {
       </div>
       <Workspace teams={teams} />
 
-      <YourTeams teams={teams} />
+      <YourTeams
+        teams={teams}
+        setActiveTeamIdentifier={setActiveTeamIdentifier}
+        setActiveTeamIndex={setActiveTeamIndex}
+      />
     </div>
   );
 }
@@ -92,7 +101,7 @@ function Workspace({ teams }) {
   );
 }
 
-function YourTeams({ teams }) {
+function YourTeams({ teams, setActiveTeamIndex, setActiveTeamIdentifier }) {
   const [isYourTeamOpen, setIsYourTeamOpen] = useState(true);
 
   return (
@@ -114,7 +123,10 @@ function YourTeams({ teams }) {
             <Teams
               teamName={team.team_name}
               teamIdentifier={team.identifier}
+              teamIndex={team.team_index}
               key={index}
+              setActiveTeamIdentifier={setActiveTeamIdentifier}
+              setActiveTeamIndex={setActiveTeamIndex}
             />
           ))}
         </div>
@@ -123,8 +135,19 @@ function YourTeams({ teams }) {
   );
 }
 
-function Teams({ teamName, teamIdentifier }) {
+function Teams({
+  teamName,
+  teamIdentifier,
+  teamIndex,
+  setActiveTeamIndex,
+  setActiveTeamIdentifier,
+}) {
   const [isTeamOpen, setIsTeamOpen] = useState(true);
+  const handleLinkClick = () => {
+    setActiveTeamIndex(teamIndex);
+    setActiveTeamIdentifier(teamIdentifier);
+  };
+
   return (
     <div className="flex flex-col">
       <button
@@ -144,7 +167,7 @@ function Teams({ teamName, teamIdentifier }) {
             isTeamOpen ? "open" : "close"
           }`}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col" onClick={handleLinkClick}>
             <NavLink to={`/team/${teamIdentifier}/all`} className="buttons">
               <IssueSvg /> <span>Issues</span>
             </NavLink>

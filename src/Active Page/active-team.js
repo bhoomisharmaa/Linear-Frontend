@@ -10,6 +10,8 @@ export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
   const [defaultStatus, setDefaultStatus] = useState("");
   const [teams, setTeams] = useState([]);
+  const [activeTeamIndex, setActiveTeamIndex] = useState(1);
+  const [activeTeamIdentifier, setActiveTeamIdentifier] = useState("");
   const getTeams = async () => {
     try {
       let team = await axios.get("http://localhost:3001/teams/get-team");
@@ -29,13 +31,15 @@ export default function ActiveTeam() {
         <Sidebar
           handleNewIssueVisibility={handleNewIssueVisibility}
           teams={teams}
+          setActiveTeamIdentifier={setActiveTeamIdentifier}
+          setActiveTeamIndex={setActiveTeamIndex}
         />
         <div className="active-page">
           {teams.map((team) => {
             return (
               <Issues
+                key={team.identifier}
                 handleNewIssueVisibility={handleNewIssueVisibility}
-                teamName={team.team_name}
                 teamIdentifier={team.identifier}
                 teamIndex={team.team_index}
               />
@@ -46,7 +50,8 @@ export default function ActiveTeam() {
       </div>
       {isNewIssueVisible && (
         <NewIssue
-          teamCode={"TIE"}
+          teamIndex={activeTeamIndex}
+          teamCode={activeTeamIdentifier}
           handleNewIssueVisibility={handleNewIssueVisibility}
           defaultStatus={defaultStatus}
         />

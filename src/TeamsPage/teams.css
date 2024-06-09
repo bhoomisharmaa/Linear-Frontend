@@ -16,7 +16,8 @@
   height: 32px;
   padding-left: 32px;
   padding-right: 22px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr 120px 120px;
   align-items: center;
 
   gap: 6px;
@@ -29,4 +30,18 @@
 
 .third-col div {
   flex-grow: 1;
+}
+
+.new-team-dia {
+  top: 20%;
+  min-width: 450px;
+  min-height: 250px;
+}
+
+.team-input::placeholder {
+  color: var(--color-text-quaternary);
+}
+
+.team-input:focus {
+  border: 1px solid var(--focus-color);
 }
