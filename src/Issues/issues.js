@@ -5,14 +5,12 @@ import {
   OpenDetailsSvg,
   FilterSvg,
   DisplaySvg,
-  PlusSvg,
-  NoAssignee,
 } from "../svg-icons/more-icons";
 import { NoActiveIssues, NoBacklogIssues, NoAllIssues } from "./no-issue";
 import { useEffect, useState } from "react";
 import IssueBasicSyntax from "./issueSectionBasicSyntax";
 import { Route, Routes } from "react-router-dom";
-import axios, { all } from "axios";
+import axios from "axios";
 import { Outlet } from "react-router-dom";
 
 export default function Issues({
@@ -23,37 +21,48 @@ export default function Issues({
   return (
     <Routes>
       <Route
-        path={`/team/${teamIdentifier}/all`}
+        path={`/${teamIdentifier}/all`}
         element={
           <AllIssuesPage
             handleNewIssueVisibility={handleNewIssueVisibility}
             teamIndex={teamIndex}
+            teamIdentifier={teamIdentifier}
           />
         }
       ></Route>
       <Route
-        path={`/team/${teamIdentifier}/active`}
+        path={`/${teamIdentifier}/active`}
         element={
           <ActiveIssuesPage
             handleNewIssueVisibility={handleNewIssueVisibility}
+            teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
           />
         }
       ></Route>
       <Route
-        path={`/team/${teamIdentifier}/backlog`}
+        path={`/${teamIdentifier}/backlog`}
         element={
           <BacklogIssuesPage
             handleNewIssueVisibility={handleNewIssueVisibility}
+            teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
           />
         }
       ></Route>
+      <Route
+        path={`/${teamIdentifier}/*`}
+        element={<p className="text-green-500">not found</p>}
+      />
     </Routes>
   );
 }
 
-function AllIssuesPage({ handleNewIssueVisibility, teamIndex }) {
+function AllIssuesPage({
+  handleNewIssueVisibility,
+  teamIndex,
+  teamIdentifier,
+}) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
       <Header headerName={"All issues"} />
@@ -64,6 +73,7 @@ function AllIssuesPage({ handleNewIssueVisibility, teamIndex }) {
           <NoAllIssues handleNewIssueVisibility={handleNewIssueVisibility} />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
       />
       <Outlet />
@@ -71,7 +81,11 @@ function AllIssuesPage({ handleNewIssueVisibility, teamIndex }) {
   );
 }
 
-function ActiveIssuesPage({ handleNewIssueVisibility, teamIndex }) {
+function ActiveIssuesPage({
+  handleNewIssueVisibility,
+  teamIndex,
+  teamIdentifier,
+}) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Active issues"} />
@@ -82,6 +96,7 @@ function ActiveIssuesPage({ handleNewIssueVisibility, teamIndex }) {
           <NoActiveIssues handleNewIssueVisibility={handleNewIssueVisibility} />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
       />{" "}
       <Outlet />
@@ -89,7 +104,11 @@ function ActiveIssuesPage({ handleNewIssueVisibility, teamIndex }) {
   );
 }
 
-function BacklogIssuesPage({ handleNewIssueVisibility, teamIndex }) {
+function BacklogIssuesPage({
+  handleNewIssueVisibility,
+  teamIndex,
+  teamIdentifier,
+}) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Backlog issues"} />
@@ -102,6 +121,7 @@ function BacklogIssuesPage({ handleNewIssueVisibility, teamIndex }) {
           />
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
+        teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
       />
       <Outlet />
@@ -114,6 +134,7 @@ function IssueSection({
   NoIssuePage,
   handleNewIssueVisibility,
   teamIndex,
+  teamIdentifier,
 }) {
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [todoIssues, setTodoIssues] = useState([]);
@@ -157,6 +178,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -166,6 +188,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -175,6 +198,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -184,6 +208,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -193,6 +218,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -202,6 +228,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
       ]);
@@ -214,6 +241,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
         <IssueBasicSyntax
@@ -223,6 +251,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
       ]);
@@ -235,6 +264,7 @@ function IssueSection({
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
         />,
       ]);

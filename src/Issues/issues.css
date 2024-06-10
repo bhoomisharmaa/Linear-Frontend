@@ -20,6 +20,10 @@
   background: var(--color-border-secondary);
 }
 
+.header span {
+  font-size: var(--font-size-small);
+}
+
 .issue-header {
   width: 100%;
   padding-right: 24px;
@@ -54,4 +58,13 @@
   font-size: var(--font-size-regular);
   color: var(--color-text-quinary);
   font-weight: 400;
+}
+
+.issue-page-div {
+  width: auto;
+  height: auto;
+  margin: 8px 8px 8px 0px;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: 5px;
 }

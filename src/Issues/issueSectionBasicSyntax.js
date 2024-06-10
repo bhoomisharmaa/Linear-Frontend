@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PlusSvg, NoAssignee } from "../svg-icons/more-icons";
 import {
   statusIconMap,
@@ -40,6 +40,7 @@ export default function IssueBasicSyntax({
   setIsSmallBoxClosed,
   handleNewIssueVisibility,
   teamIndex,
+  teamIdentifier,
 }) {
   const dateFormatter = (dateStr) => {
     const date = new Date(dateStr);
@@ -58,8 +59,11 @@ export default function IssueBasicSyntax({
             handleNewIssueVisibility={handleNewIssueVisibility}
           />
           {issueArray.map((issue) => (
-            <div
+            <Link
               key={issue.index}
+              to={`/issue/${teamIdentifier}/${issue.index}/${issue.name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}`}
               className="issueee flex justify-between items-center h-[var(--issue-section-height)] px-6"
             >
               <div className="flex items-center gap-2">
@@ -113,7 +117,7 @@ export default function IssueBasicSyntax({
                 <span>{dateFormatter(issue.updatedAt)}</span>
                 <button>{<NoAssignee />}</button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (

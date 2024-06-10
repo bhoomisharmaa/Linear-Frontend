@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import TeamPage from "../TeamsPage/teams";
 import { Route, Routes } from "react-router-dom";
+import IssuePage from "../Issues/issue-page";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
@@ -35,19 +36,43 @@ export default function ActiveTeam() {
           setActiveTeamIdentifier={setActiveTeamIdentifier}
           setActiveTeamIndex={setActiveTeamIndex}
         />
-        <div className="active-page">
+
+        <Routes>
+          <Route
+            path="/team/*"
+            element={
+              <div className="active-page">
+                {teams.map((team) => {
+                  return (
+                    <Issues
+                      key={team.identifier}
+                      handleNewIssueVisibility={handleNewIssueVisibility}
+                      teamIdentifier={team.identifier}
+                      teamIndex={team.team_index}
+                    />
+                  );
+                })}
+                <TeamPage teams={teams} />
+              </div>
+            }
+          ></Route>
           {teams.map((team) => {
             return (
-              <Issues
-                key={team.identifier}
-                handleNewIssueVisibility={handleNewIssueVisibility}
-                teamIdentifier={team.identifier}
-                teamIndex={team.team_index}
-              />
+              <Route
+                key={team.team_index}
+                path={`issue/${team.identifier}/*`}
+                element={
+                  <IssuePage
+                    teamName={team.team_name}
+                    teamIdentifier={team.identifier}
+                    teamIndex={team.team_index}
+                  />
+                }
+              ></Route>
             );
           })}
-          <TeamPage teams={teams} />
-        </div>
+          <Route path="*" element={<p className="text-red-500">not found</p>} />
+        </Routes>
       </div>
       {isNewIssueVisible && (
         <NewIssue
