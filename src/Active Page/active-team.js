@@ -5,6 +5,7 @@ import NewIssue from "../New Issue/new-issue";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TeamPage from "../TeamsPage/teams";
+import { Route, Routes } from "react-router-dom";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);

@@ -25,7 +25,11 @@ function TeammmmmPageeee({ teams }) {
       <ThirdCol />
       {teams.map((team) => {
         return (
-          <TeamInfo team_name={team.team_name} identifier={team.identifier} />
+          <TeamInfo
+            key={team.team_name}
+            team_name={team.team_name}
+            identifier={team.identifier}
+          />
         );
       })}
       {canShowNewTeam && <NewTeamBox setCanShowNewTeam={setCanShowNewTeam} />}

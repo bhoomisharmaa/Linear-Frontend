@@ -2,9 +2,14 @@ import "./App.css";
 import ActiveTeam from "./Active Page/active-team";
 import React, { useState } from "react";
 import axios from "axios";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  return <ActiveTeam />;
+  return (
+    <Routes>
+      <Route path="*" element={<ActiveTeam />} />
+    </Routes>
+  );
 }
 
 const CreateWorkspace = () => {

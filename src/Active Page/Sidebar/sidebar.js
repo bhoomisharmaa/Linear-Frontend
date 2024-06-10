@@ -21,7 +21,7 @@ export default function Sidebar({
   setActiveTeamIdentifier,
 }) {
   return (
-    <div className="sidebar">
+    <div className="sidebar thin-scroll-bar">
       <HeaderDiv handleNewIssueVisibility={handleNewIssueVisibility} />
       <div className="flex flex-col">
         <button className="buttons">

@@ -19,3 +19,8 @@
   font-size: var(--font-size-mini);
   font-weight: 300;
 }
+
+.thin-scroll-bar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
+}

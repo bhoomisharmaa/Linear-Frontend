@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import IssueBasicSyntax from "./issueSectionBasicSyntax";
 import { Route, Routes } from "react-router-dom";
 import axios, { all } from "axios";
+import { Outlet } from "react-router-dom";
 
 export default function Issues({
   handleNewIssueVisibility,
@@ -65,6 +66,7 @@ function AllIssuesPage({ handleNewIssueVisibility, teamIndex }) {
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIndex={teamIndex}
       />
+      <Outlet />
     </div>
   );
 }
@@ -81,7 +83,8 @@ function ActiveIssuesPage({ handleNewIssueVisibility, teamIndex }) {
         }
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIndex={teamIndex}
-      />
+      />{" "}
+      <Outlet />
     </div>
   );
 }
@@ -101,6 +104,7 @@ function BacklogIssuesPage({ handleNewIssueVisibility, teamIndex }) {
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIndex={teamIndex}
       />
+      <Outlet />
     </div>
   );
 }
