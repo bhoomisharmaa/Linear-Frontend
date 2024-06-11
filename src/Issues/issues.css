@@ -67,4 +67,40 @@
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border-secondary);
   border-radius: 5px;
+  display: flex;
+}
+
+.issue-des-div {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.properties-sec {
+  position: relative;
+  min-width: 220px;
+  max-width: 280px;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  background-color: rgb(23, 24, 26);
+  border-left: 1px solid rgb(31, 34, 40);
+}
+
+.issue-title-input {
+  background-color: #0000;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-title2);
+}
+
+.issue-description-input {
+  background-color: #0000;
+  color: var(--color-text-primary);
+  min-height: max-content;
+  max-height: 500px;
+  flex-grow: 1;
+  height: 100%;
+  resize: none;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
 }

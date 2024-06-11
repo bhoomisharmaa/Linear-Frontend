@@ -47,7 +47,7 @@ export default function NewTeamBox({ setCanShowNewTeam }) {
               <input
                 className="team-input bg-[var(--color-bg-secondary)] w-full px-3.5 py-1 text-md font-medium border-[1px] border-[var(--color-border-quaternary)] rounded-md"
                 value={teamName}
-                placeholder="e.g. WHEEEEEEE"
+                placeholder="e.g. Wheeeeeeeeeeeee"
                 onChange={(event) => setTeamName(event.target.value)}
               />
             </div>

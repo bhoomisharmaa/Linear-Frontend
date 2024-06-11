@@ -20,6 +20,7 @@ export default function ActiveTeam() {
       setTeams(team.data);
     } catch {}
   };
+
   useEffect(() => {
     getTeams();
   }, []);
@@ -52,10 +53,18 @@ export default function ActiveTeam() {
                     />
                   );
                 })}
-                <TeamPage teams={teams} />
               </div>
             }
           ></Route>
+          <Route
+            path="/teams"
+            element={
+              <div className="active-page">
+                <TeamPage teams={teams} />{" "}
+              </div>
+            }
+          />
+
           {teams.map((team) => {
             return (
               <Route
@@ -71,7 +80,6 @@ export default function ActiveTeam() {
               ></Route>
             );
           })}
-          <Route path="*" element={<p className="text-red-500">not found</p>} />
         </Routes>
       </div>
       {isNewIssueVisible && (

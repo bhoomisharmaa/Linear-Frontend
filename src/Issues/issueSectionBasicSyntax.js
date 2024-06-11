@@ -50,7 +50,7 @@ export default function IssueBasicSyntax({
   };
   return (
     <div className="h-max w-full flex flex-col">
-      {issueArray.length > 0 ? (
+      {issueArray.length > 0 && (
         <div className="h-full w-full flex flex-col ">
           <IssueHeader
             issueName={issueArray[0].status}
@@ -59,7 +59,7 @@ export default function IssueBasicSyntax({
             handleNewIssueVisibility={handleNewIssueVisibility}
           />
           {issueArray.map((issue) => (
-            <Link
+            <div
               key={issue.index}
               to={`/issue/${teamIdentifier}/${issue.index}/${issue.name
                 .replace(/\s+/g, "-")
@@ -117,11 +117,9 @@ export default function IssueBasicSyntax({
                 <span>{dateFormatter(issue.updatedAt)}</span>
                 <button>{<NoAssignee />}</button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
-      ) : (
-        ""
       )}
     </div>
   );
@@ -149,8 +147,9 @@ function ButtonDiv({
       await axios.post(
         `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
         {
-          updateKey,
-          updateItem,
+          data: {
+            [updateKey]: updateItem,
+          },
         }
       );
       console.log(updateItem);

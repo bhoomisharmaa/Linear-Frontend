@@ -44,6 +44,8 @@ export default function NewIssue({
     else setAnimationName("window-shrink 0.5s ease-in-out forwards");
   };
   const createIssue = async () => {
+    console.log(issueDescription);
+
     try {
       const issue = await axios.post(
         `http://localhost:3001/issues/${teamIndex}/create-issues`,
@@ -316,7 +318,7 @@ function InputArea({
         className="issue-description px-3.5 bg-[var(--color-bg-secondary)] text-sm text-wrap grow"
         value={issueDescription}
         placeholder="Add description..."
-        onChange={(event) => setIssueDescription(event.stopPropagation.value)}
+        onChange={(event) => setIssueDescription(event.target.value)}
       />
     </div>
   );

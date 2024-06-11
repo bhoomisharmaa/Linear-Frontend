@@ -7,16 +7,6 @@ import NewTeamBox from "./new-team";
 import { useState } from "react";
 
 export default function TeamPage({ teams }) {
-  return (
-    <div>
-      <Routes>
-        <Route path="/teams" element={<TeammmmmPageeee teams={teams} />} />
-      </Routes>
-    </div>
-  );
-}
-
-function TeammmmmPageeee({ teams }) {
   const [canShowNewTeam, setCanShowNewTeam] = useState(false);
   return (
     <div className="relative issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
