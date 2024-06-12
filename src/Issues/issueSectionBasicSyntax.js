@@ -61,11 +61,14 @@ export default function IssueBasicSyntax({
           {issueArray.map((issue) => (
             <div
               key={issue.index}
-              to={`/issue/${teamIdentifier}/${issue.index}/${issue.name
-                .replace(/\s+/g, "-")
-                .toLowerCase()}`}
-              className="issueee flex justify-between items-center h-[var(--issue-section-height)] px-6"
+              className="relative issueee flex justify-between items-center h-[var(--issue-section-height)] px-6"
             >
+              <Link
+                className="absolute w-full h-full z-[0]"
+                to={`/issue/${teamIdentifier}/${issue.index}/${issue.name
+                  .replace(/\s+/g, "-")
+                  .toLowerCase()}`}
+              />
               <div className="flex items-center gap-2">
                 <ButtonDiv
                   isSmallBoxClosed={isSmallBoxClosed}
@@ -93,6 +96,7 @@ export default function IssueBasicSyntax({
                   setIssueArray={setIssueArray}
                   teamIndex={teamIndex}
                 />
+
                 <span className="font-medium">{issue.name}</span>
               </div>
               <div className="flex items-center gap-2 text-[var(--color-text-tertiary)] font-small">
