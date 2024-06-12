@@ -171,7 +171,7 @@ function Footer() {
   );
 }
 
-function InfoButtons({
+export function InfoButtons({
   isSmallerView,
   issueAssignee,
   setIssueAssignee,
@@ -246,7 +246,7 @@ function InfoButtons({
   );
 }
 
-function AddStuffButtons({
+export function AddStuffButtons({
   iconMap,
   stuff,
   setStuff,
@@ -274,7 +274,10 @@ function AddStuffButtons({
         {stuff ? iconMap[stuff] : <AddLabelSvg />}
         <span className="text-xs">{stuff}</span>
         {!showAdditionBox && (
-          <div className="hover-div">
+          <div
+            className="hover-div"
+            style={{ fontSize: "var(--font-size-small)", left: "-10%" }}
+          >
             <span className="">{changingStuff}</span>
           </div>
         )}

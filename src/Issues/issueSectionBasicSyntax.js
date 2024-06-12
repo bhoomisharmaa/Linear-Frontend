@@ -156,7 +156,6 @@ function ButtonDiv({
           },
         }
       );
-      console.log(updateItem);
       setIssueArray(true);
     } catch (error) {
       console.error("Error updating issue:", error);

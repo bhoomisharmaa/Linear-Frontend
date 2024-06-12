@@ -137,10 +137,7 @@
   height: max-content;
   position: absolute;
   margin-bottom: -65px;
-  left: -10%;
   padding: 3px 5px;
-
-  font-size: var(--font-size-small);
 
   background-color: var(--color-bg-secondary);
 

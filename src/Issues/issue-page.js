@@ -1,8 +1,15 @@
 import { useNavigate, Route, Routes, redirect } from "react-router-dom";
 import BugSvg from "../svg-icons/bug";
-import { TheresMoreSvg } from "../svg-icons/more-icons";
+import {
+  CopyIssueID,
+  CopyIssueURL,
+  TheresMoreSvg,
+} from "../svg-icons/more-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { AddStuffButtons } from "../New Issue/new-issue";
+import { projectIconMap, statusIconMap } from "../svg-icon-map";
+import AdditionBoxes from "../New Issue/small-addition-boxes";
 
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   const [issues, setIssues] = useState([]);
@@ -90,15 +97,6 @@ function MainTeamPage({
       console.error("Error updating issue:", error);
     }
   };
-  useEffect(() => {
-    adjustTextareaHeight();
-  }, [description]);
-
-  const adjustTextareaHeight = () => {
-    const textarea = document.getElementById("myTextarea");
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`; // Set new height based on content
-  };
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
@@ -108,12 +106,6 @@ function MainTeamPage({
     );
   };
 
-  const handleEnterKeyPress = (event) => {
-    // handles form submission when presses key in textarea
-    if (event.key === "Enter" && !event.shiftKey) {
-      handleFormSubmission(event);
-    }
-  };
   return (
     <div className="issue-page-div">
       <div className="issue-des-div">
@@ -122,34 +114,22 @@ function MainTeamPage({
           teamIdentifier={teamIdentifier}
           issueIndex={issueIndex}
         />
-        <div className="grow flex flex-col mx-[60px] mt-[60px]">
-          <form
-            className="flex flex-col gap-2"
-            onSubmit={(event) => handleFormSubmission(event)}
-          >
-            <input
-              className="issue-title-input py-1.5"
-              value={title}
-              placeholder="Issue title"
-              onChange={(event) => setTitle(event.target.value)}
-            />
-            <textarea
-              id="myTextarea"
-              className="issue-description-input text-sm"
-              value={description}
-              placeholder="Issue description"
-              onChange={(event) => {
-                setDescription(event.target.value);
-                adjustTextareaHeight();
-              }}
-              rows="1"
-              onKeyPress={(event) => handleEnterKeyPress(event)}
-            />
-          </form>
-        </div>
+        <MainContentDiv
+          description={description}
+          handleFormSubmission={handleFormSubmission}
+          setDescription={setDescription}
+          title={title}
+          setTitle={setTitle}
+        />
       </div>
+
       <div className="properties-sec">
-        <span className="text-white">properties</span>
+        <PropertyDiv
+          issueIndex={issueIndex}
+          teamIndex={teamIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          status={status}
+        />
       </div>
     </div>
   );
@@ -170,6 +150,115 @@ function Header({ teamName, issueIndex, teamIdentifier }) {
       <button className="buttons">
         <TheresMoreSvg />
       </button>
+    </div>
+  );
+}
+
+function MainContentDiv({
+  handleFormSubmission,
+  title,
+  setTitle,
+  description,
+  setDescription,
+}) {
+  const handleEnterKeyPress = (event) => {
+    // handles form submission when presses key in textarea
+    if (event.key === "Enter" && !event.shiftKey) {
+      handleFormSubmission(event);
+    }
+  };
+  const adjustTextareaHeight = () => {
+    const textarea = document.getElementById("myTextarea");
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`; // Set new height based on content
+  };
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [description]);
+  return (
+    <div className="grow flex flex-col mx-[60px] mt-[60px]">
+      <form
+        className="flex flex-col gap-2"
+        onSubmit={(event) => handleFormSubmission(event)}
+      >
+        <input
+          className="issue-title-input py-1.5"
+          value={title}
+          placeholder="Issue title"
+          onChange={(event) => setTitle(event.target.value)}
+        />
+        <textarea
+          id="myTextarea"
+          className="issue-description-input text-sm"
+          value={description}
+          placeholder="Issue description"
+          onChange={(event) => {
+            setDescription(event.target.value);
+            adjustTextareaHeight();
+          }}
+          rows="1"
+          onKeyPress={(event) => handleEnterKeyPress(event)}
+        />
+      </form>
+    </div>
+  );
+}
+
+function PropertyDiv({ issueIndex, teamIndex, setIssueHasUpdated, status }) {
+  const [updateKey, setUpdateKey] = useState("");
+  const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(true);
+  const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
+  const [isChecked, setIsChecked] = useState(true);
+  const updateIssue = async (updateItem) => {
+    try {
+      await axios.post(
+        `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
+        {
+          data: {
+            [updateKey]: updateItem,
+          },
+        }
+      );
+      setIssueHasUpdated(true);
+    } catch (error) {
+      console.error("Error updating issue:", error);
+    }
+  };
+  return (
+    <div className="flex flex-col gap-4 text-white px-6">
+      <div className="flex justify-between items-center h-10">
+        <span className="text-white text-sm">Properties</span>
+        <div className="flex items-center gap-[6px]">
+          <CopyButton svg={<CopyIssueURL />} copySt={"Copy issue URL"} />
+          <CopyButton svg={<CopyIssueID />} copySt={"Copuy issue ID"} />
+        </div>
+      </div>
+      <AdditionBoxes
+        iconMap={statusIconMap}
+        stuff={status}
+        setStuff={updateIssue}
+        changingStuff={"Change Status"}
+        isSmallBoxClosed={isSmallBoxClosed}
+        setIsSmallBoxClosed={setIsSmallBoxClosed}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+        setShowAdditionBox={setShowAdditionBox}
+        isSmallerView={true}
+      />
+    </div>
+  );
+}
+
+function CopyButton({ svg, copySt }) {
+  return (
+    <div className="relative-div">
+      <button className="buttons">{svg}</button>
+      <div
+        className="hover-div text-white text-xs mt-1"
+        style={{ right: "10%" }}
+      >
+        <span className="">{copySt}</span>
+      </div>
     </div>
   );
 }
