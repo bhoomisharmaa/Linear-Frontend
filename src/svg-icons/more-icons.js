@@ -278,7 +278,6 @@ export function CopyIssueURL() {
 export function CopyIssueID() {
   return (
     <svg
-      class=""
       width="16"
       height="16"
       viewBox="0 0 16 16"

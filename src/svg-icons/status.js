@@ -5,7 +5,7 @@ export function ToDoSvg({ size }) {
       height="14"
       viewBox="0 0 16 16"
       fill="none"
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, marginTop: "2px" }}
     >
       <circle
         cx="7"

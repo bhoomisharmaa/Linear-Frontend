@@ -8,7 +8,13 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { AddStuffButtons } from "../New Issue/new-issue";
-import { projectIconMap, statusIconMap } from "../svg-icon-map";
+import {
+  assigneeIconMap,
+  labelIconMap,
+  priorityIconMap,
+  projectIconMap,
+  statusIconMap,
+} from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
@@ -129,6 +135,8 @@ function MainTeamPage({
           teamIndex={teamIndex}
           setIssueHasUpdated={setIssueHasUpdated}
           status={status}
+          priority={priority}
+          label={label}
         />
       </div>
     </div>
@@ -204,9 +212,95 @@ function MainContentDiv({
   );
 }
 
-function PropertyDiv({ issueIndex, teamIndex, setIssueHasUpdated, status }) {
-  const [updateKey, setUpdateKey] = useState("");
+function PropertyDiv({
+  issueIndex,
+  teamIndex,
+  setIssueHasUpdated,
+  status,
+  priority,
+  label,
+  assignee,
+}) {
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(true);
+
+  return (
+    <div className="w-full h-full flex flex-col gap-4 px-6">
+      <div className="flex justify-between items-center h-10">
+        <span className="text-gray-400 text-sm">Properties</span>
+        <div className="flex items-center gap-[6px]">
+          <CopyButton svg={<CopyIssueURL />} copySt={"Copy issue URL"} />
+          <CopyButton svg={<CopyIssueID />} copySt={"Copuy issue ID"} />
+        </div>
+      </div>
+      <div className="w-full h-full flex flex-col gap-4 text-white">
+        <InfoButtons
+          iconMap={statusIconMap}
+          stuff={status}
+          changingStuff={"Change status"}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          teamIndex={teamIndex}
+          issueIndex={issueIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          updateKey={"status"}
+        />
+        <InfoButtons
+          iconMap={priorityIconMap}
+          stuff={priority}
+          changingStuff={"Change priority"}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          teamIndex={teamIndex}
+          issueIndex={issueIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          updateKey={"priority"}
+        />
+        {/* <AddStuffButtons
+          iconMap={assigneeIconMap}
+          stuff={assignee}
+          changingStuff={"Assignee to"}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          teamIndex={teamIndex}
+          issueIndex={issueIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          updateKey={""}
+        /> */}
+        <InfoButtons
+          iconMap={labelIconMap}
+          stuff={label}
+          changingStuff={"Add label"}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          teamIndex={teamIndex}
+          issueIndex={issueIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          updateKey={"label"}
+        />
+        {/* <AddStuffButtons
+          iconMap={projectIconMap}
+          stuff={project}
+          changingStuff={"Add to project"}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          isSmallerView={isSmallerView}
+        /> */}
+      </div>
+    </div>
+  );
+}
+
+function InfoButtons({
+  isSmallBoxClosed,
+  setIsSmallBoxClosed,
+  iconMap,
+  stuff,
+  changingStuff,
+  updateKey,
+  teamIndex,
+  issueIndex,
+  setIssueHasUpdated,
+}) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
   const [isChecked, setIsChecked] = useState(true);
   const updateIssue = async (updateItem) => {
@@ -225,26 +319,40 @@ function PropertyDiv({ issueIndex, teamIndex, setIssueHasUpdated, status }) {
     }
   };
   return (
-    <div className="flex flex-col gap-4 text-white px-6">
-      <div className="flex justify-between items-center h-10">
-        <span className="text-white text-sm">Properties</span>
-        <div className="flex items-center gap-[6px]">
-          <CopyButton svg={<CopyIssueURL />} copySt={"Copy issue URL"} />
-          <CopyButton svg={<CopyIssueID />} copySt={"Copuy issue ID"} />
-        </div>
-      </div>
-      <AdditionBoxes
-        iconMap={statusIconMap}
-        stuff={status}
-        setStuff={updateIssue}
-        changingStuff={"Change Status"}
-        isSmallBoxClosed={isSmallBoxClosed}
-        setIsSmallBoxClosed={setIsSmallBoxClosed}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        setShowAdditionBox={setShowAdditionBox}
-        isSmallerView={true}
-      />
+    <div className="w-10/12">
+      <button
+        type="button "
+        onClick={() => {
+          setShowAdditionBox(isSmallBoxClosed);
+        }}
+        className="relative-div mr-2.5 w-full flex items-center justify-start gap-2 z-0 py-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]"
+      >
+        {iconMap[stuff]}
+
+        <span className="text-sm font-medium">{stuff}</span>
+        {!showAdditionBox && (
+          <div
+            className="hover-div"
+            style={{ fontSize: "var(--font-size-small)", left: "-10%" }}
+          >
+            <span className="">{changingStuff}</span>
+          </div>
+        )}
+      </button>
+      {showAdditionBox && (
+        <AdditionBoxes
+          iconMap={iconMap}
+          stuff={stuff}
+          setStuff={updateIssue}
+          changingStuff={changingStuff}
+          isSmallBoxClosed={isSmallBoxClosed}
+          setIsSmallBoxClosed={setIsSmallBoxClosed}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          setShowAdditionBox={setShowAdditionBox}
+          isSmallerView={true}
+        />
+      )}
     </div>
   );
 }
