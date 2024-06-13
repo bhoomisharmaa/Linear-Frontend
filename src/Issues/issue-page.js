@@ -17,7 +17,7 @@ import {
   statusIconMap,
 } from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
-import { findRenderedComponentWithType } from "react-dom/test-utils";
+import NotFoundPage from "../404page/not-found";
 
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   const [issues, setIssues] = useState([]);
@@ -38,6 +38,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   useEffect(() => {
     getIssues();
     setIssueHasUpdated(false);
+    setLoading(false);
   }, [issueHasUpdated]);
   if (loading) {
     return <div className="text-white">Loading...</div>; // Show a loading state while fetching data
@@ -66,7 +67,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
           }
         ></Route>
       ))}
-      <Route path="*" element={<p className="text-white">not found</p>} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

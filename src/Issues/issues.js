@@ -12,6 +12,7 @@ import IssueBasicSyntax from "./issueSectionBasicSyntax";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
+import NotFoundPage from "../404page/not-found";
 
 export default function Issues({
   handleNewIssueVisibility,
@@ -50,10 +51,7 @@ export default function Issues({
           />
         }
       ></Route>
-      <Route
-        path={`/${teamIdentifier}/*`}
-        element={<p className="text-green-500">not found</p>}
-      />
+      <Route path={`/${teamIdentifier}/*`} element={<NotFoundPage />} />
     </Routes>
   );
 }
@@ -145,6 +143,7 @@ function IssueSection({
   const [issueToReturn, setIssueToReturn] = useState([]);
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(false); //checks if any other box is open
   const [issueIsChanged, setIssueIsChanged] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Fetches issues from db according to their status
   const getIssues = async (status, setArray) => {
@@ -153,7 +152,9 @@ function IssueSection({
         `http://localhost:3001/issues/${teamIndex}/get-issues/${status}`
       );
       setArray(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching issues:", error);
     }
   };
@@ -278,6 +279,10 @@ function IssueSection({
     canceledIssues,
     duplicateIssues,
   ]);
+
+  if (loading) {
+    return <div className="text-red-500">Loading...</div>; // Show a loading state while fetching data
+  }
 
   return (
     <div className="issue-section flex flex-col items-center">

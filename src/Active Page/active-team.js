@@ -7,6 +7,7 @@ import axios from "axios";
 import TeamPage from "../TeamsPage/teams";
 import { Route, Routes } from "react-router-dom";
 import IssuePage from "../Issues/issue-page";
+import NotFoundPage from "../404page/not-found";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
@@ -80,6 +81,7 @@ export default function ActiveTeam() {
               ></Route>
             );
           })}
+          <Route to="/*" element={<NotFoundPage />} />
         </Routes>
       </div>
       {isNewIssueVisible && (

@@ -1,19 +1,22 @@
+import { useEffect, useState } from "react";
 import "./not-found.css";
 
 export default function NotFoundPage() {
+  const [randomIndex, setRandomIndex] = useState(0);
   const catArray = [
-    "./catzz/cat1.jpeg",
-    "./catzz/cat2.jpeg",
-    "./catzz/cat4.jpeg",
-    "./catzz/cat6.jpeg",
-    "./catzz/cat7.jpeg",
-    "./catzz/cat8.jpeg",
-    "./catzz/cat9.jpeg",
-    "./catzz/cat10.jpeg",
-    "./catzz/cat11.jpeg",
+    "/catzz/cat2.jpeg",
+    "/catzz/cat4.jpeg",
+    "/catzz/cat12.jpeg",
+    "/catzz/cat13.jpeg",
+    "/catzz/cat14.jpeg",
+    "/catzz/cat15.jpeg",
+    "/catzz/cat16.jpeg",
+    "/catzz/cat6.jpeg",
+    "/catzz/cat10.jpeg",
   ];
-  const randomIndex = Math.floor(Math.random() * catArray.length);
-  console.log(randomIndex);
+  useEffect(() => {
+    setRandomIndex(Math.floor(Math.random() * catArray.length));
+  }, []);
   return (
     <div className="div-not-found gap-4">
       <img src={catArray[randomIndex]} className="h-48 w-48" />
