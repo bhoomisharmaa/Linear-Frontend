@@ -104,3 +104,8 @@
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-color) transparent;
 }
+
+.properties-sec h3 {
+  font-size: var(--font-size-mini);
+  color: var(--color-text-quinary);
+}

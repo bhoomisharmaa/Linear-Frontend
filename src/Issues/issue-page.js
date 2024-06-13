@@ -1,4 +1,10 @@
-import { useNavigate, Route, Routes, redirect } from "react-router-dom";
+import {
+  useNavigate,
+  Route,
+  Routes,
+  redirect,
+  useLocation,
+} from "react-router-dom";
 import BugSvg from "../svg-icons/bug";
 import {
   CopyIssueID,
@@ -132,6 +138,7 @@ function MainTeamPage({
       <div className="properties-sec">
         <PropertyDiv
           issueIndex={issueIndex}
+          teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
           setIssueHasUpdated={setIssueHasUpdated}
           status={status}
@@ -215,6 +222,7 @@ function MainContentDiv({
 function PropertyDiv({
   issueIndex,
   teamIndex,
+  teamIdentifier,
   setIssueHasUpdated,
   status,
   priority,
@@ -222,69 +230,98 @@ function PropertyDiv({
   assignee,
 }) {
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(true);
+  const location = useLocation();
 
   return (
-    <div className="w-full h-full flex flex-col gap-4 px-6">
-      <div className="flex justify-between items-center h-10">
-        <span className="text-gray-400 text-sm">Properties</span>
-        <div className="flex items-center gap-[6px]">
-          <CopyButton svg={<CopyIssueURL />} copySt={"Copy issue URL"} />
-          <CopyButton svg={<CopyIssueID />} copySt={"Copuy issue ID"} />
+    <div className="w-full h-full flex flex-col gap-6 px-6 text-white">
+      <div className="w-full h-max flex flex-col gap-2">
+        <div className="flex justify-between items-center h-10">
+          <h3>Properties</h3>
+          <div className="flex items-center gap-[6px]">
+            <CopyButton
+              svg={<CopyIssueURL />}
+              copySt={"Copy issue URL"}
+              copyStuff={"http://localhost:3000" + location.pathname}
+            />
+            <CopyButton
+              svg={<CopyIssueID />}
+              copySt={"Copuy issue ID"}
+              copyStuff={teamIdentifier + "-" + issueIndex}
+            />
+          </div>
+        </div>
+        <div className="w-10/12 py-1 px-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]">
+          <InfoButtons
+            iconMap={statusIconMap}
+            stuff={status}
+            changingStuff={"Change status"}
+            isSmallBoxClosed={isSmallBoxClosed}
+            setIsSmallBoxClosed={setIsSmallBoxClosed}
+            teamIndex={teamIndex}
+            issueIndex={issueIndex}
+            setIssueHasUpdated={setIssueHasUpdated}
+            updateKey={"status"}
+          />
+        </div>
+        <div className="w-10/12 py-1 px-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]">
+          <InfoButtons
+            iconMap={priorityIconMap}
+            stuff={priority}
+            changingStuff={"Change priority"}
+            isSmallBoxClosed={isSmallBoxClosed}
+            setIsSmallBoxClosed={setIsSmallBoxClosed}
+            teamIndex={teamIndex}
+            issueIndex={issueIndex}
+            setIssueHasUpdated={setIssueHasUpdated}
+            updateKey={"priority"}
+          />
+        </div>
+        <div className="w-10/12 py-1 px-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]">
+          <InfoButtons
+            iconMap={assigneeIconMap}
+            stuff={"Assignee"}
+            changingStuff={"Assignee to"}
+            isSmallBoxClosed={isSmallBoxClosed}
+            setIsSmallBoxClosed={setIsSmallBoxClosed}
+            teamIndex={teamIndex}
+            issueIndex={issueIndex}
+            setIssueHasUpdated={setIssueHasUpdated}
+            updateKey={"assignee"}
+          />
         </div>
       </div>
-      <div className="w-full h-full flex flex-col gap-4 text-white">
+
+      <div className="flex flex-col gap-4">
+        <h3>Labels</h3>
+        <div className="w-max border-[1px] border-[var(--color-button-border)] px-2 py-0.5 rounded-2xl hover:brightness-110 hover:bg-[#63676d19]">
+          <InfoButtons
+            iconMap={labelIconMap}
+            stuff={label}
+            changingStuff={"Change label"}
+            isSmallBoxClosed={isSmallBoxClosed}
+            setIsSmallBoxClosed={setIsSmallBoxClosed}
+            teamIndex={teamIndex}
+            issueIndex={issueIndex}
+            setIssueHasUpdated={setIssueHasUpdated}
+            updateKey={"label"}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3>Project</h3>
         <InfoButtons
-          iconMap={statusIconMap}
-          stuff={status}
-          changingStuff={"Change status"}
-          isSmallBoxClosed={isSmallBoxClosed}
-          setIsSmallBoxClosed={setIsSmallBoxClosed}
-          teamIndex={teamIndex}
-          issueIndex={issueIndex}
-          setIssueHasUpdated={setIssueHasUpdated}
-          updateKey={"status"}
-        />
-        <InfoButtons
-          iconMap={priorityIconMap}
-          stuff={priority}
-          changingStuff={"Change priority"}
-          isSmallBoxClosed={isSmallBoxClosed}
-          setIsSmallBoxClosed={setIsSmallBoxClosed}
-          teamIndex={teamIndex}
-          issueIndex={issueIndex}
-          setIssueHasUpdated={setIssueHasUpdated}
-          updateKey={"priority"}
-        />
-        {/* <AddStuffButtons
-          iconMap={assigneeIconMap}
-          stuff={assignee}
-          changingStuff={"Assignee to"}
-          isSmallBoxClosed={isSmallBoxClosed}
-          setIsSmallBoxClosed={setIsSmallBoxClosed}
-          teamIndex={teamIndex}
-          issueIndex={issueIndex}
-          setIssueHasUpdated={setIssueHasUpdated}
-          updateKey={""}
-        /> */}
-        <InfoButtons
-          iconMap={labelIconMap}
-          stuff={label}
-          changingStuff={"Add label"}
-          isSmallBoxClosed={isSmallBoxClosed}
-          setIsSmallBoxClosed={setIsSmallBoxClosed}
-          teamIndex={teamIndex}
-          issueIndex={issueIndex}
-          setIssueHasUpdated={setIssueHasUpdated}
-          updateKey={"label"}
-        />
-        {/* <AddStuffButtons
           iconMap={projectIconMap}
-          stuff={project}
+          stuff={"No Project"}
           changingStuff={"Add to project"}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
-          isSmallerView={isSmallerView}
-        /> */}
+          isSmallerView={true}
+          teamIndex={teamIndex}
+          issueIndex={issueIndex}
+          setIssueHasUpdated={setIssueHasUpdated}
+          updateKey={"project"}
+        />
       </div>
     </div>
   );
@@ -319,13 +356,13 @@ function InfoButtons({
     }
   };
   return (
-    <div className="w-10/12">
+    <div className="w-full">
       <button
         type="button "
         onClick={() => {
           setShowAdditionBox(isSmallBoxClosed);
         }}
-        className="relative-div mr-2.5 w-full flex items-center justify-start gap-2 z-0 py-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]"
+        className="relative-div w-full flex items-center justify-start gap-2"
       >
         {iconMap[stuff]}
 
@@ -357,10 +394,17 @@ function InfoButtons({
   );
 }
 
-function CopyButton({ svg, copySt }) {
+function CopyButton({ svg, copySt, copyStuff }) {
   return (
     <div className="relative-div">
-      <button className="buttons">{svg}</button>
+      <button
+        className="buttons"
+        onClick={() => {
+          navigator.clipboard.writeText(copyStuff);
+        }}
+      >
+        {svg}
+      </button>
       <div
         className="hover-div text-white text-xs mt-1"
         style={{ right: "10%" }}
