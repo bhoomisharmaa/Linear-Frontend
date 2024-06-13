@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import NotFoundPage from "../404page/not-found";
+import LoadingPage from "../LoadingPage/loading-page";
 
 export default function Issues({
   handleNewIssueVisibility,
@@ -281,11 +282,11 @@ function IssueSection({
   ]);
 
   if (loading) {
-    return <div className="text-red-500">Loading...</div>; // Show a loading state while fetching data
+    return <LoadingPage />; // Show a loading state while fetching data
   }
 
   return (
-    <div className="issue-section flex flex-col items-center">
+    <div className="issue-section flex flex-col items-center overflow-hidden">
       {issueToReturn
         .map((issue) => !!issue.props.issueArray.length)
         .find((element) => element === true)

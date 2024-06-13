@@ -18,6 +18,7 @@ import {
 } from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 import NotFoundPage from "../404page/not-found";
+import LoadingPage from "../LoadingPage/loading-page";
 
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   const [issues, setIssues] = useState([]);
@@ -29,7 +30,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
         `http://localhost:3001/issues/${teamIndex}/get-issues`
       );
       setIssues(response.data);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.error("Error fetching issues:", error);
       setLoading(false);
@@ -41,7 +42,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
     setLoading(false);
   }, [issueHasUpdated]);
   if (loading) {
-    return <div className="text-white">Loading...</div>; // Show a loading state while fetching data
+    return <LoadingPage />; // Show a loading state while fetching data
   }
   return (
     <Routes>
