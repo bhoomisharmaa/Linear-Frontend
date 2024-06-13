@@ -1,19 +1,14 @@
-import {
-  useNavigate,
-  Route,
-  Routes,
-  redirect,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, Route, Routes, useLocation } from "react-router-dom";
 import BugSvg from "../svg-icons/bug";
 import {
   CopyIssueID,
   CopyIssueURL,
+  CrossSvg,
+  InfoIcon,
   TheresMoreSvg,
 } from "../svg-icons/more-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { AddStuffButtons } from "../New Issue/new-issue";
 import {
   assigneeIconMap,
   labelIconMap,
@@ -22,6 +17,7 @@ import {
   statusIconMap,
 } from "../svg-icon-map";
 import AdditionBoxes from "../New Issue/small-addition-boxes";
+import { findRenderedComponentWithType } from "react-dom/test-utils";
 
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   const [issues, setIssues] = useState([]);
@@ -89,6 +85,7 @@ function MainTeamPage({
 }) {
   const [title, setTitle] = useState(issueTitle);
   const [description, setDescription] = useState(issueDescription);
+
   const navigate = useNavigate();
   const updateIssue = async (event) => {
     try {
@@ -102,9 +99,6 @@ function MainTeamPage({
         }
       );
       setIssueHasUpdated(true);
-
-      // console.log(updateItem);
-      // setIssueArray(true);
     } catch (error) {
       console.error("Error updating issue:", error);
     }
@@ -146,6 +140,30 @@ function MainTeamPage({
           label={label}
         />
       </div>
+    </div>
+  );
+}
+
+function MsgBox({ msgText, msgAnimation, setMsgAnimation, setShowMsgBox }) {
+  return (
+    <div
+      className="absolute w-max bottom-0 right-0 m-2 bg-[var(--color-button-tertiary)] text-white font-semibold px-3 py-2 flex gap-10 text-[13px] border-[1px] border-[var(--color-button-border)] rounded-md"
+      style={{ animation: msgAnimation }}
+      onAnimationEnd={() => {
+        if (msgAnimation.includes("down")) setShowMsgBox(false);
+        setMsgAnimation("");
+      }}
+    >
+      <div className="flex gap-2 items-center">
+        <InfoIcon />
+        <span>{msgText}</span>
+      </div>
+      <button
+        className="buttons"
+        onClick={() => setMsgAnimation("button-down 0.5s forwards ease-in-out")}
+      >
+        <CrossSvg />
+      </button>
     </div>
   );
 }
@@ -233,7 +251,7 @@ function PropertyDiv({
   const location = useLocation();
 
   return (
-    <div className="w-full h-full flex flex-col gap-6 px-6 text-white">
+    <div className="relative w-full h-full flex flex-col gap-6 px-6 text-white">
       <div className="w-full h-max flex flex-col gap-2">
         <div className="flex justify-between items-center h-10">
           <h3>Properties</h3>
@@ -242,11 +260,17 @@ function PropertyDiv({
               svg={<CopyIssueURL />}
               copySt={"Copy issue URL"}
               copyStuff={"http://localhost:3000" + location.pathname}
+              msgText={`Issue "${
+                teamIdentifier + "-" + issueIndex
+              }" URL copied to clipboard`}
             />
             <CopyButton
               svg={<CopyIssueID />}
               copySt={"Copuy issue ID"}
               copyStuff={teamIdentifier + "-" + issueIndex}
+              msgText={`"${
+                teamIdentifier + "-" + issueIndex
+              }" copied to clipboard `}
             />
           </div>
         </div>
@@ -394,12 +418,24 @@ function InfoButtons({
   );
 }
 
-function CopyButton({ svg, copySt, copyStuff }) {
+function CopyButton({ svg, copySt, copyStuff, msgText }) {
+  const [showMsgBox, setShowMsgBox] = useState(false);
+  const [msgAnimation, setMsgAnimation] = useState("");
+
+  const handleCopyButtonClick = () => {
+    setMsgAnimation(
+      showMsgBox
+        ? "button-pop 0.5s forwards ease-in-out"
+        : "button-up 0.5s forwards ease-in-out"
+    );
+    setShowMsgBox(true);
+  };
   return (
     <div className="relative-div">
       <button
         className="buttons"
         onClick={() => {
+          handleCopyButtonClick();
           navigator.clipboard.writeText(copyStuff);
         }}
       >
@@ -411,6 +447,14 @@ function CopyButton({ svg, copySt, copyStuff }) {
       >
         <span className="">{copySt}</span>
       </div>
+      {showMsgBox && (
+        <MsgBox
+          msgAnimation={msgAnimation}
+          msgText={msgText}
+          setMsgAnimation={setMsgAnimation}
+          setShowMsgBox={setShowMsgBox}
+        />
+      )}
     </div>
   );
 }
