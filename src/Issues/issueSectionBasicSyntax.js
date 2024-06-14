@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PlusSvg, NoAssignee } from "../svg-icons/more-icons";
+import { PlusSvg, NoAssignee, TheresMoreSvg } from "../svg-icons/more-icons";
 import {
   statusIconMap,
   priorityIconMap,
@@ -9,6 +9,7 @@ import {
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import RightClickBox from "./right-click-box";
 
 function IssueHeader({
   issueName,
@@ -119,11 +120,31 @@ export default function IssueBasicSyntax({
 
                 <span>{dateFormatter(issue.createdAt)}</span>
                 <span>{dateFormatter(issue.updatedAt)}</span>
-                <button>{<NoAssignee />}</button>
+                <RenameNDelete
+                  issueIndex={issue.index}
+                  teamIndex={issue.teamIndex}
+                />
               </div>
             </div>
           ))}
         </div>
+      )}
+    </div>
+  );
+}
+
+function RenameNDelete({ issueIndex, teamIndex }) {
+  const [showSmallBox, setShowSmallBox] = useState(false);
+  return (
+    <div className="relative">
+      <button
+        className="buttons"
+        onClick={() => setShowSmallBox(!showSmallBox)}
+      >
+        <TheresMoreSvg />
+      </button>
+      {showSmallBox && (
+        <RightClickBox issueIndex={issueIndex} teamIndex={teamIndex} />
       )}
     </div>
   );

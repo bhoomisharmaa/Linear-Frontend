@@ -30,7 +30,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
         `http://localhost:3001/issues/${teamIndex}/get-issues`
       );
       setIssues(response.data);
-      // setLoading(false);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching issues:", error);
       setLoading(false);
@@ -39,7 +39,6 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   useEffect(() => {
     getIssues();
     setIssueHasUpdated(false);
-    setLoading(false);
   }, [issueHasUpdated]);
   if (loading) {
     return <LoadingPage />; // Show a loading state while fetching data
@@ -68,7 +67,7 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
           }
         ></Route>
       ))}
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="/*" element={<NotFoundPage />} />
     </Routes>
   );
 }

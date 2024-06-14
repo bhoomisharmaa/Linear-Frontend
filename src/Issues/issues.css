@@ -1,6 +1,8 @@
 .issue-div {
   font-size: var(--font-size-smallPlus);
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
 }
 
 .header,
@@ -40,6 +42,9 @@
 .issue-section {
   flex-grow: 1;
   width: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
 }
 
 .issueee {
@@ -142,4 +147,22 @@
   100% {
     transform: scale(1);
   }
+}
+
+.right-click-box {
+  background-color: var(--color-bg-senary);
+  box-shadow: rgba(0, 0, 0, 0.184) 0px 3px 8px, rgba(0, 0, 0, 0.184) 0px 2px 5px,
+    rgba(0, 0, 0, 0.184) 0px 1px 1px;
+  border: 1px solid rgb(56, 59, 65);
+  border-radius: 5px;
+  color: var(--color-text-secondary);
+  overflow: auto;
+
+  position: absolute;
+  right: 0;
+  top: 100%;
+
+  display: flex;
+  flex-direction: column;
+  width: 200px;
 }
