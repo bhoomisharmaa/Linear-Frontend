@@ -10,6 +10,7 @@ import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RightClickBox from "./right-click-box";
+import RenameDialog from "./rename";
 
 function IssueHeader({
   issueName,
@@ -123,17 +124,24 @@ export default function IssueBasicSyntax({
                 <RenameNDelete
                   issueIndex={issue.index}
                   teamIndex={issue.teamIndex}
+                  issueTitle={issue.name}
+                  teamIdentifier={teamIdentifier}
                 />
               </div>
             </div>
           ))}
         </div>
       )}
+      <RenameDialog
+        issueIndex={5}
+        issueTitle={"WHEEEEEEEEEEEEEEEE"}
+        teamIdentifier={"TIE"}
+      />
     </div>
   );
 }
 
-function RenameNDelete({ issueIndex, teamIndex }) {
+function RenameNDelete({ issueIndex, teamIndex, teamIdentifier, issueTitle }) {
   const [showSmallBox, setShowSmallBox] = useState(false);
   return (
     <div className="relative">

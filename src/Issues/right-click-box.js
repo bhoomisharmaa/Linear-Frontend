@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BinSvg, CrossSvg, PencileSvg } from "../svg-icons/more-icons";
+import RenameDialog from "./rename";
 
 export default function RightClickBox({ issueIndex, teamIndex }) {
   console.log(issueIndex);

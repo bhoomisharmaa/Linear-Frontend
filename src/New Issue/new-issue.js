@@ -72,7 +72,7 @@ export default function NewIssue({
         }`}
         style={{ animation: animationName }}
       >
-        <form className={`new-anything-form `} onSubmit={createIssue}>
+        <form className="new-anything-form" onSubmit={createIssue}>
           <div className="h-full flex flex-col grow">
             <Header
               teamCode={teamCode}
