@@ -97,8 +97,7 @@ function ActiveIssuesPage({
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
-      />{" "}
-      <Outlet />
+      />
     </div>
   );
 }
@@ -123,7 +122,6 @@ function BacklogIssuesPage({
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
       />
-      <Outlet />
     </div>
   );
 }
@@ -176,7 +174,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="inProgress"
           issueArray={inProgressIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -186,7 +184,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="todo"
           issueArray={todoIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -196,7 +194,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="backlog"
           issueArray={backlogIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -206,7 +204,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="done"
           issueArray={doneIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -216,7 +214,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="canceled"
           issueArray={canceledIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -226,7 +224,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="duplicate"
           issueArray={duplicateIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -239,7 +237,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="inProgress"
           issueArray={inProgressIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -249,7 +247,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="todo"
           issueArray={todoIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}
@@ -262,7 +260,7 @@ function IssueSection({
         <IssueBasicSyntax
           key="backlog"
           issueArray={backlogIssues}
-          setIssueArray={setIssueIsChanged}
+          setIsIssueChanged={setIssueIsChanged}
           isSmallBoxClosed={isSmallBoxClosed}
           setIsSmallBoxClosed={setIsSmallBoxClosed}
           handleNewIssueVisibility={handleNewIssueVisibility}

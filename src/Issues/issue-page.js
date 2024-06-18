@@ -215,11 +215,17 @@ function MainContentDiv({
         className="flex flex-col gap-2"
         onSubmit={(event) => handleFormSubmission(event)}
       >
-        <input
+        <textarea
+          id="myTextarea"
           className="issue-title-input py-1.5"
           value={title}
           placeholder="Issue title"
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(event) => {
+            setTitle(event.target.value);
+            adjustTextareaHeight();
+          }}
+          rows="1"
+          onKeyPress={(event) => handleEnterKeyPress(event)}
         />
         <textarea
           id="myTextarea"

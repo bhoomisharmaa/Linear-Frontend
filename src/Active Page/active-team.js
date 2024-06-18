@@ -8,6 +8,7 @@ import TeamPage from "../TeamsPage/teams";
 import { Route, Routes } from "react-router-dom";
 import IssuePage from "../Issues/issue-page";
 import NotFoundPage from "../404page/not-found";
+import RenameDialog from "../Issues/rename";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
@@ -92,6 +93,11 @@ export default function ActiveTeam() {
           defaultStatus={defaultStatus}
         />
       )}
+      <RenameDialog
+        issueIndex={5}
+        issueTitle={"WHEEEEEEEEEEEEEEEE"}
+        teamIdentifier={"TIE"}
+      />
     </div>
   );
 }

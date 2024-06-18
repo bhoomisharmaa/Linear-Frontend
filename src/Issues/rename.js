@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { PencileSvg } from "../svg-icons/more-icons";
 
 export default function RenameDialog({
@@ -7,10 +6,14 @@ export default function RenameDialog({
   issueIndex,
   issueTitle,
 }) {
-  const [title, setTitle] = useState(issueTitle);
+  const [title, setTitle] = useState("");
+  useState(() => {
+    setTitle(issueTitle);
+  }, []);
   return (
     <div className="new-anything-div">
-      <div className="new-anything w-[640px] bg-[var(--color-bg-senary)] flex flex-col left-2/4 top-2/4">
+      <div className="absolute w-screen h-screen" />
+      <div className="new-anything w-[640px] bg-[var(--color-bg-senary)] flex flex-col left-1/4 right-1/2 top-1/4">
         <div className="w-max text-[var(--color-text-secondary)] ml-4 mt-4 rounded-md px-2 py-1 font-light bg-[var(--color-button-secondary)]">
           {teamIdentifier + "-" + issueIndex + " - " + issueTitle}
         </div>
@@ -26,7 +29,9 @@ export default function RenameDialog({
           <div className="flex gap-2 p-2 m-2 bg-[var(--color-button-secondary)] rounded-md">
             <PencileSvg />
             <span className="text-white">Rename issue to</span>
-            <span className="text-[var(--color-text-quinary)]">"{title}"</span>
+            <span className="text-[var(--color-text-quinary)] text-ellipsis overflow-hidden">
+              "{title}"
+            </span>
           </div>
         )}
       </div>

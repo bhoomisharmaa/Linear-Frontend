@@ -91,13 +91,8 @@
   border-left: 1px solid rgb(31, 34, 40);
 }
 
+.issue-description-input,
 .issue-title-input {
-  background-color: #0000;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-title2);
-}
-
-.issue-description-input {
   background-color: #0000;
   color: var(--color-text-primary);
   min-height: max-content;
@@ -108,6 +103,10 @@
 
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+.issue-title-input {
+  font-size: var(--font-size-title2);
 }
 
 .properties-sec h3 {

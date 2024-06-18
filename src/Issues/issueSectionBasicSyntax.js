@@ -37,7 +37,7 @@ function IssueHeader({
 
 export default function IssueBasicSyntax({
   issueArray,
-  setIssueArray,
+  setIsIssueChanged,
   isSmallBoxClosed,
   setIsSmallBoxClosed,
   handleNewIssueVisibility,
@@ -81,7 +81,7 @@ export default function IssueBasicSyntax({
                   issueIndex={issue.index}
                   updateKey={"priority"}
                   issueArray={issueArray}
-                  setIssueArray={setIssueArray}
+                  setIsIssueChanged={setIsIssueChanged}
                   teamIndex={teamIndex}
                 />
                 <span className="text-[var(--color-text-tertiary)] font-small">
@@ -95,7 +95,7 @@ export default function IssueBasicSyntax({
                   iconName={issue.status}
                   issueIndex={issue.index}
                   updateKey={"status"}
-                  setIssueArray={setIssueArray}
+                  setIsIssueChanged={setIsIssueChanged}
                   teamIndex={teamIndex}
                 />
 
@@ -113,7 +113,7 @@ export default function IssueBasicSyntax({
                       issueIndex={issue.index}
                       updateKey={"label"}
                       issueArray={issueArray}
-                      setIssueArray={setIssueArray}
+                      setIsIssueChanged={setIsIssueChanged}
                       teamIndex={teamIndex}
                     />
                   </div>
@@ -132,11 +132,6 @@ export default function IssueBasicSyntax({
           ))}
         </div>
       )}
-      <RenameDialog
-        issueIndex={5}
-        issueTitle={"WHEEEEEEEEEEEEEEEE"}
-        teamIdentifier={"TIE"}
-      />
     </div>
   );
 }
@@ -165,7 +160,7 @@ function ButtonDiv({
   iconName,
   issueIndex,
   updateKey,
-  setIssueArray,
+  setIsIssueChanged,
   teamIndex,
 }) {
   const [showAdditionBox, setShowAdditionBox] = useState(false); //checks if any other box is open
@@ -185,7 +180,7 @@ function ButtonDiv({
           },
         }
       );
-      setIssueArray(true);
+      setIsIssueChanged(true);
     } catch (error) {
       console.error("Error updating issue:", error);
     }
