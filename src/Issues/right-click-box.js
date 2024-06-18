@@ -8,6 +8,7 @@ export default function RightClickBox({
   issueTitle,
   handleRenameBtnClick,
   setShowSmallBox,
+  setIsIssueChanged,
 }) {
   console.log(issueIndex);
   const deleteIssue = async () => {
@@ -15,18 +16,19 @@ export default function RightClickBox({
       await axios.delete(
         `http://localhost:3001/issues/${teamIndex}/deleteIssue/${issueIndex}`
       );
+      setIsIssueChanged(true);
     } catch (error) {
       console.log("Error deleting issue", error);
     }
   };
   return (
-    <div className="right-click-box gap-2 p-1 z-50">
+    <div
+      className="right-click-box gap-2 p-1 z-50"
+      onClick={() => setShowSmallBox(false)}
+    >
       <button
         className="w-full flex gap-2 pl-2 py-1 rounded-md hover:brightness-110 hover:bg-[#63676d19]"
-        onClick={() => {
-          handleRenameBtnClick(issueIndex, issueTitle);
-          setShowSmallBox(false);
-        }}
+        onClick={() => handleRenameBtnClick(issueIndex, issueTitle)}
       >
         <PencileSvg />
         <span>Rename...</span>

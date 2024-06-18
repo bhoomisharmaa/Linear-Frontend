@@ -126,8 +126,8 @@ export default function IssueBasicSyntax({
                   issueIndex={issue.index}
                   teamIndex={issue.teamIndex}
                   issueTitle={issue.name}
-                  teamIdentifier={teamIdentifier}
                   handleRenameBtnClick={handleRenameBtnClick}
+                  setIsIssueChanged={setIsIssueChanged}
                 />
               </div>
             </div>
@@ -141,9 +141,9 @@ export default function IssueBasicSyntax({
 function RenameNDelete({
   issueIndex,
   teamIndex,
-  teamIdentifier,
   issueTitle,
   handleRenameBtnClick,
+  setIsIssueChanged,
 }) {
   const [showSmallBox, setShowSmallBox] = useState(false);
   return (
@@ -161,6 +161,7 @@ function RenameNDelete({
           handleRenameBtnClick={handleRenameBtnClick}
           issueTitle={issueTitle}
           setShowSmallBox={setShowSmallBox}
+          setIsIssueChanged={setIsIssueChanged}
         />
       )}
     </div>

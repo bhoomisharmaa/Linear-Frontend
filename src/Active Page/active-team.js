@@ -109,6 +109,7 @@ export default function ActiveTeam() {
           issueTitle={issueTitle}
           teamIdentifier={activeTeamIdentifier}
           setShowRenameBox={setShowRenameBox}
+          teamIndex={activeTeamIndex}
         />
       )}
     </div>

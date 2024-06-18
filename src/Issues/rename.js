@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PencileSvg } from "../svg-icons/more-icons";
+import { updateIssue } from "./update-issue";
 
 export default function RenameDialog({
   teamIdentifier,
   issueIndex,
   issueTitle,
   setShowRenameBox,
+  teamIndex,
 }) {
   const [title, setTitle] = useState("");
-  useState(() => {
+  useEffect(() => {
     setTitle(issueTitle);
   }, []);
+  const handleFormSubmission = () => {
+    updateIssue(
+      {
+        name: title,
+      },
+      teamIndex,
+      issueIndex
+    );
+  };
   return (
     <div className="new-anything-div">
       <div
@@ -21,7 +32,10 @@ export default function RenameDialog({
         <div className="w-max text-[var(--color-text-secondary)] ml-4 mt-4 rounded-md px-2 py-1 font-light bg-[var(--color-button-secondary)]">
           {teamIdentifier + "-" + issueIndex + " - " + issueTitle}
         </div>
-        <form className="new-anything-form text-white p-5 border-b border-[var(--color-border-quaternary)]">
+        <form
+          className="new-anything-form text-white p-5 border-b border-[var(--color-border-quaternary)]"
+          onSubmit={handleFormSubmission}
+        >
           <input
             className="bg-[var(--color-bg-senary)] text-lg font-medium"
             value={title}

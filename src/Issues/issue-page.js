@@ -19,7 +19,9 @@ import {
 import AdditionBoxes from "../New Issue/small-addition-boxes";
 import NotFoundPage from "../404page/not-found";
 import LoadingPage from "../LoadingPage/loading-page";
+import { updateIssue } from "./update-issue";
 
+// Page that apppears after you click on an issue
 export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,26 +90,18 @@ function MainTeamPage({
   const [description, setDescription] = useState(issueDescription);
 
   const navigate = useNavigate();
-  const updateIssue = async (event) => {
-    try {
-      await axios.post(
-        `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
-        {
-          data: {
-            name: title,
-            description,
-          },
-        }
-      );
-      setIssueHasUpdated(true);
-    } catch (error) {
-      console.error("Error updating issue:", error);
-    }
-  };
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
-    updateIssue();
+    updateIssue(
+      {
+        name: title,
+        description,
+      },
+      teamIndex,
+      issueIndex,
+      setIssueHasUpdated
+    );
     navigate(
       `/issue/TIE/${issueIndex}/${title.replace(/\s+/g, "-").toLowerCase()}`
     );
@@ -201,14 +195,17 @@ function MainContentDiv({
       handleFormSubmission(event);
     }
   };
-  const adjustTextareaHeight = () => {
-    const textarea = document.getElementById("myTextarea");
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`; // Set new height based on content
+  const adjustTextareaHeight = (id) => {
+    const textarea = document.getElementById(id);
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`; // Set new height based on content
+    }
   };
   useEffect(() => {
-    adjustTextareaHeight();
-  }, [description]);
+    adjustTextareaHeight("titleTextarea");
+    adjustTextareaHeight("descriptionTextarea");
+  }, [title, description]);
   return (
     <div className="grow flex flex-col mx-[60px] mt-[60px]">
       <form
@@ -216,25 +213,25 @@ function MainContentDiv({
         onSubmit={(event) => handleFormSubmission(event)}
       >
         <textarea
-          id="myTextarea"
+          id="titleTextarea"
           className="issue-title-input py-1.5"
           value={title}
           placeholder="Issue title"
           onChange={(event) => {
             setTitle(event.target.value);
-            adjustTextareaHeight();
+            adjustTextareaHeight("titleTextarea");
           }}
           rows="1"
           onKeyPress={(event) => handleEnterKeyPress(event)}
         />
         <textarea
-          id="myTextarea"
+          id="descriptionTextarea"
           className="issue-description-input text-sm"
           value={description}
           placeholder="Issue description"
           onChange={(event) => {
             setDescription(event.target.value);
-            adjustTextareaHeight();
+            adjustTextareaHeight("descriptionTextarea");
           }}
           rows="1"
           onKeyPress={(event) => handleEnterKeyPress(event)}
