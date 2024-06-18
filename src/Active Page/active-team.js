@@ -16,6 +16,9 @@ export default function ActiveTeam() {
   const [teams, setTeams] = useState([]);
   const [activeTeamIndex, setActiveTeamIndex] = useState(1);
   const [activeTeamIdentifier, setActiveTeamIdentifier] = useState("");
+  const [showRenameBox, setShowRenameBox] = useState(false);
+  const [issueTitle, setIssueTitle] = useState(0);
+  const [issueIndex, setIssueIndex] = useState(0);
   const getTeams = async () => {
     try {
       let team = await axios.get("http://localhost:3001/teams/get-team");
@@ -29,6 +32,12 @@ export default function ActiveTeam() {
   const handleNewIssueVisibility = (newStatus) => {
     setIsNewIssueVisible(!isNewIssueVisible);
     setDefaultStatus(newStatus);
+  };
+
+  const handleRenameBtnClick = (index, title) => {
+    setIssueIndex(index);
+    setIssueTitle(title);
+    setShowRenameBox(true);
   };
   return (
     <div className="h-vh w-vh relative">
@@ -52,6 +61,7 @@ export default function ActiveTeam() {
                       handleNewIssueVisibility={handleNewIssueVisibility}
                       teamIdentifier={team.identifier}
                       teamIndex={team.team_index}
+                      handleRenameBtnClick={handleRenameBtnClick}
                     />
                   );
                 })}
@@ -93,11 +103,14 @@ export default function ActiveTeam() {
           defaultStatus={defaultStatus}
         />
       )}
-      <RenameDialog
-        issueIndex={5}
-        issueTitle={"WHEEEEEEEEEEEEEEEE"}
-        teamIdentifier={"TIE"}
-      />
+      {showRenameBox && (
+        <RenameDialog
+          issueIndex={issueIndex}
+          issueTitle={issueTitle}
+          teamIdentifier={activeTeamIdentifier}
+          setShowRenameBox={setShowRenameBox}
+        />
+      )}
     </div>
   );
 }

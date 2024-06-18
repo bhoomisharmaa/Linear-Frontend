@@ -43,6 +43,7 @@ export default function IssueBasicSyntax({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   const dateFormatter = (dateStr) => {
     const date = new Date(dateStr);
@@ -126,6 +127,7 @@ export default function IssueBasicSyntax({
                   teamIndex={issue.teamIndex}
                   issueTitle={issue.name}
                   teamIdentifier={teamIdentifier}
+                  handleRenameBtnClick={handleRenameBtnClick}
                 />
               </div>
             </div>
@@ -136,7 +138,13 @@ export default function IssueBasicSyntax({
   );
 }
 
-function RenameNDelete({ issueIndex, teamIndex, teamIdentifier, issueTitle }) {
+function RenameNDelete({
+  issueIndex,
+  teamIndex,
+  teamIdentifier,
+  issueTitle,
+  handleRenameBtnClick,
+}) {
   const [showSmallBox, setShowSmallBox] = useState(false);
   return (
     <div className="relative">
@@ -147,7 +155,13 @@ function RenameNDelete({ issueIndex, teamIndex, teamIdentifier, issueTitle }) {
         <TheresMoreSvg />
       </button>
       {showSmallBox && (
-        <RightClickBox issueIndex={issueIndex} teamIndex={teamIndex} />
+        <RightClickBox
+          issueIndex={issueIndex}
+          teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
+          issueTitle={issueTitle}
+          setShowSmallBox={setShowSmallBox}
+        />
       )}
     </div>
   );

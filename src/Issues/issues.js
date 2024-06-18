@@ -19,6 +19,7 @@ export default function Issues({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   return (
     <Routes>
@@ -29,6 +30,7 @@ export default function Issues({
             handleNewIssueVisibility={handleNewIssueVisibility}
             teamIndex={teamIndex}
             teamIdentifier={teamIdentifier}
+            handleRenameBtnClick={handleRenameBtnClick}
           />
         }
       ></Route>
@@ -39,6 +41,7 @@ export default function Issues({
             handleNewIssueVisibility={handleNewIssueVisibility}
             teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
+            handleRenameBtnClick={handleRenameBtnClick}
           />
         }
       ></Route>
@@ -49,6 +52,7 @@ export default function Issues({
             handleNewIssueVisibility={handleNewIssueVisibility}
             teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
+            handleRenameBtnClick={handleRenameBtnClick}
           />
         }
       ></Route>
@@ -61,6 +65,7 @@ function AllIssuesPage({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
@@ -74,8 +79,8 @@ function AllIssuesPage({
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
+        handleRenameBtnClick={handleRenameBtnClick}
       />
-      <Outlet />
     </div>
   );
 }
@@ -84,6 +89,7 @@ function ActiveIssuesPage({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
@@ -97,6 +103,7 @@ function ActiveIssuesPage({
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
+        handleRenameBtnClick={handleRenameBtnClick}
       />
     </div>
   );
@@ -106,6 +113,7 @@ function BacklogIssuesPage({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
@@ -121,6 +129,7 @@ function BacklogIssuesPage({
         handleNewIssueVisibility={handleNewIssueVisibility}
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
+        handleRenameBtnClick={handleRenameBtnClick}
       />
     </div>
   );
@@ -132,6 +141,7 @@ function IssueSection({
   handleNewIssueVisibility,
   teamIndex,
   teamIdentifier,
+  handleRenameBtnClick,
 }) {
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [todoIssues, setTodoIssues] = useState([]);
@@ -180,6 +190,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -190,6 +201,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="backlog"
@@ -200,6 +212,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="done"
@@ -210,6 +223,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="canceled"
@@ -220,6 +234,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="duplicate"
@@ -230,6 +245,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
       ]);
     } else if (issueToBeDisplayed === "active") {
@@ -243,6 +259,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
         <IssueBasicSyntax
           key="todo"
@@ -253,6 +270,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
       ]);
     } else if (issueToBeDisplayed === "backlog") {
@@ -266,6 +284,7 @@ function IssueSection({
           handleNewIssueVisibility={handleNewIssueVisibility}
           teamIdentifier={teamIdentifier}
           teamIndex={teamIndex}
+          handleRenameBtnClick={handleRenameBtnClick}
         />,
       ]);
     }
