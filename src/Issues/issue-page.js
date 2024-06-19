@@ -1,11 +1,11 @@
 import { useNavigate, Route, Routes, useLocation } from "react-router-dom";
 import BugSvg from "../svg-icons/bug";
 import {
+  AddLabelSvg,
   CopyIssueID,
   CopyIssueURL,
   CrossSvg,
   InfoIcon,
-  TheresMoreSvg,
 } from "../svg-icons/more-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -22,7 +22,12 @@ import LoadingPage from "../LoadingPage/loading-page";
 import { updateIssue } from "./update-issue";
 
 // Page that apppears after you click on an issue
-export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
+export default function IssuePage({
+  teamName,
+  teamIndex,
+  teamIdentifier,
+  handleRenameBtnClick,
+}) {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [issueHasUpdated, setIssueHasUpdated] = useState(true);
@@ -64,7 +69,9 @@ export default function IssuePage({ teamName, teamIndex, teamIdentifier }) {
               label={issue.label}
               priority={issue.priority}
               status={issue.status}
+              issueHasUpdated={issueHasUpdated}
               setIssueHasUpdated={setIssueHasUpdated}
+              handleRenameBtnClick={handleRenameBtnClick}
             />
           }
         ></Route>
@@ -84,12 +91,18 @@ function MainTeamPage({
   status,
   priority,
   label,
+  issueHasUpdated,
   setIssueHasUpdated,
 }) {
-  const [title, setTitle] = useState(issueTitle);
-  const [description, setDescription] = useState(issueDescription);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle(issueTitle);
+    setDescription(issueDescription);
+  }, [issueHasUpdated]);
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
@@ -175,9 +188,6 @@ function Header({ teamName, issueIndex, teamIdentifier }) {
       <span>{teamName}</span>
       <span>›</span>
       <span>{teamIdentifier + "-" + issueIndex}</span>
-      <button className="buttons">
-        <TheresMoreSvg />
-      </button>
     </div>
   );
 }
@@ -255,7 +265,7 @@ function PropertyDiv({
   const location = useLocation();
 
   return (
-    <div className="relative w-full h-full flex flex-col gap-6 px-6 text-white">
+    <div className="relative w-full h-full flex flex-col gap-6 px-6 text-[var(--color-text-tertiary)]">
       <div className="w-full h-max flex flex-col gap-2">
         <div className="flex justify-between items-center h-10">
           <h3>Properties</h3>
@@ -392,8 +402,14 @@ function InfoButtons({
         }}
         className="relative-div w-full flex items-center justify-start gap-2"
       >
-        {iconMap[stuff]}
-
+        {stuff ? (
+          iconMap[stuff]
+        ) : (
+          <div className="flex gap-3 items-center">
+            <AddLabelSvg />
+            <span className="text-sm">Add label</span>
+          </div>
+        )}
         <span className="text-sm font-medium">{stuff}</span>
         {!showAdditionBox && (
           <div

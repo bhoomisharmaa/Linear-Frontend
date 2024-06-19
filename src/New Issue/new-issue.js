@@ -65,7 +65,7 @@ export default function NewIssue({
     }
   };
   return (
-    <div className="new-anything-div">
+    <div className="new-anything-div z-[100]">
       <dialog
         className={`new-anything bg-[var(--color-bg-secondary)] ${
           isSmallerView ? "smallWindow" : "largeWindow"

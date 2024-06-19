@@ -10,7 +10,6 @@ import AdditionBoxes from "../New Issue/small-addition-boxes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RightClickBox from "./right-click-box";
-import RenameDialog from "./rename";
 
 function IssueHeader({
   issueName,
@@ -138,7 +137,7 @@ export default function IssueBasicSyntax({
   );
 }
 
-function RenameNDelete({
+export function RenameNDelete({
   issueIndex,
   teamIndex,
   issueTitle,
