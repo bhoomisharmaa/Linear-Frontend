@@ -20,6 +20,7 @@ export default function Issues({
   teamIndex,
   teamIdentifier,
   handleRenameBtnClick,
+  handleFilterButtonClick,
 }) {
   return (
     <Routes>
@@ -31,6 +32,7 @@ export default function Issues({
             teamIndex={teamIndex}
             teamIdentifier={teamIdentifier}
             handleRenameBtnClick={handleRenameBtnClick}
+            handleFilterButtonClick={handleFilterButtonClick}
           />
         }
       ></Route>
@@ -42,6 +44,7 @@ export default function Issues({
             teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
             handleRenameBtnClick={handleRenameBtnClick}
+            handleFilterButtonClick={handleFilterButtonClick}
           />
         }
       ></Route>
@@ -53,6 +56,7 @@ export default function Issues({
             teamIdentifier={teamIdentifier}
             teamIndex={teamIndex}
             handleRenameBtnClick={handleRenameBtnClick}
+            handleFilterButtonClick={handleFilterButtonClick}
           />
         }
       ></Route>
@@ -66,11 +70,12 @@ function AllIssuesPage({
   teamIndex,
   teamIdentifier,
   handleRenameBtnClick,
+  handleFilterButtonClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
       <Header headerName={"All issues"} />
-      <FilterDisplaySection />
+      <FilterDisplaySection handleFilterButtonClick={handleFilterButtonClick} />
       <IssueSection
         issueToBeDisplayed={"all"}
         NoIssuePage={
@@ -90,11 +95,12 @@ function ActiveIssuesPage({
   teamIndex,
   teamIdentifier,
   handleRenameBtnClick,
+  handleFilterButtonClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Active issues"} />
-      <FilterDisplaySection />
+      <FilterDisplaySection handleFilterButtonClick={handleFilterButtonClick} />
       <IssueSection
         issueToBeDisplayed={"active"}
         NoIssuePage={
@@ -114,11 +120,12 @@ function BacklogIssuesPage({
   teamIndex,
   teamIdentifier,
   handleRenameBtnClick,
+  handleFilterButtonClick,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
       <Header headerName={"Backlog issues"} />
-      <FilterDisplaySection />
+      <FilterDisplaySection handleFilterButtonClick={handleFilterButtonClick} />
       <IssueSection
         issueToBeDisplayed={"backlog"}
         NoIssuePage={
@@ -335,10 +342,13 @@ function Header({ headerName }) {
   );
 }
 
-function FilterDisplaySection() {
+function FilterDisplaySection({ handleFilterButtonClick }) {
   return (
     <div className="filter-display flex justify-between items-center py-2">
-      <button className="flex items-center gap-1  px-2 py-0.5 rounded-sm hover:brightness-200 hover:bg-[#63676d19]">
+      <button
+        className="flex items-center gap-1  px-2 py-0.5 rounded-sm hover:brightness-200 hover:bg-[#63676d19]"
+        onClick={(event) => handleFilterButtonClick(event)}
+      >
         <FilterSvg />
         <span>Filter</span>
       </button>

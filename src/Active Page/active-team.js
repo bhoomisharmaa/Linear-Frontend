@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import IssuePage from "../Issues/issue-page";
 import NotFoundPage from "../404page/not-found";
 import RenameDialog from "../Issues/rename";
+import FilterBox from "../filter-box";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);
@@ -19,6 +20,8 @@ export default function ActiveTeam() {
   const [showRenameBox, setShowRenameBox] = useState(false);
   const [issueTitle, setIssueTitle] = useState(0);
   const [issueIndex, setIssueIndex] = useState(0);
+  const [showFilterBox, setShowFilterBox] = useState(false);
+  const [mousePos, setMousePos] = useState([]);
   const getTeams = async () => {
     try {
       let team = await axios.get("http://localhost:3001/teams/get-team");
@@ -38,6 +41,11 @@ export default function ActiveTeam() {
     setIssueIndex(index);
     setIssueTitle(title);
     setShowRenameBox(true);
+  };
+
+  const handleFilterButtonClick = (event) => {
+    setMousePos([event.clientX, event.clientY]);
+    setShowFilterBox(true);
   };
   return (
     <div className="h-vh w-vh relative">
@@ -62,6 +70,7 @@ export default function ActiveTeam() {
                       teamIdentifier={team.identifier}
                       teamIndex={team.team_index}
                       handleRenameBtnClick={handleRenameBtnClick}
+                      handleFilterButtonClick={handleFilterButtonClick}
                     />
                   );
                 })}
@@ -110,6 +119,13 @@ export default function ActiveTeam() {
           teamIdentifier={activeTeamIdentifier}
           setShowRenameBox={setShowRenameBox}
           teamIndex={activeTeamIndex}
+        />
+      )}
+      {showFilterBox && (
+        <FilterBox
+          mousePosX={mousePos[0]}
+          mousePosY={mousePos[1]}
+          setShowFilterBox={setShowFilterBox}
         />
       )}
     </div>

@@ -66,7 +66,7 @@ export default function IssueBasicSyntax({
               className="relative issueee flex justify-between items-center h-[var(--issue-section-height)] px-6"
             >
               <Link
-                className="absolute w-full h-full z-[0]"
+                className="absolute w-full h-full z-[0] cursor-default"
                 to={`/issue/${teamIdentifier}/${issue.index}/${issue.name
                   .replace(/\s+/g, "-")
                   .toLowerCase()}`}
