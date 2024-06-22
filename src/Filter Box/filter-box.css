@@ -1,0 +1,37 @@
+.right-click-div {
+  background-color: var(--color-bg-senary);
+  box-shadow: rgba(0, 0, 0, 0.184) 0px 3px 8px, rgba(0, 0, 0, 0.184) 0px 2px 5px,
+    rgba(0, 0, 0, 0.184) 0px 1px 1px;
+  border: 1px solid rgb(56, 59, 65);
+  border-radius: 5px;
+  color: var(--color-text-secondary);
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+
+  animation: fade-in 0.1s ease-in-out forwards;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    height: max-content;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    height: max-content;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
+}

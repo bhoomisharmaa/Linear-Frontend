@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import IssuePage from "../Issues/issue-page";
 import NotFoundPage from "../404page/not-found";
 import RenameDialog from "../Issues/rename";
-import FilterBox from "../filter-box";
+import FilterBox from "../Filter Box/filter-box";
 
 export default function ActiveTeam() {
   const [isNewIssueVisible, setIsNewIssueVisible] = useState(false);

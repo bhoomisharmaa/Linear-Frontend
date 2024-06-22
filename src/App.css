@@ -1,7 +1,3 @@
-.svg-icons:hover {
-  filter: brightness(1.2);
-}
-
 .font-small {
   font-size: var(--font-size-small);
 }
@@ -23,19 +19,4 @@
 .thin-scroll-bar {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-color) transparent;
-}
-
-.right-click-div {
-  background-color: var(--color-bg-senary);
-  box-shadow: rgba(0, 0, 0, 0.184) 0px 3px 8px, rgba(0, 0, 0, 0.184) 0px 2px 5px,
-    rgba(0, 0, 0, 0.184) 0px 1px 1px;
-  border: 1px solid rgb(56, 59, 65);
-  border-radius: 5px;
-  color: var(--color-text-secondary);
-
-  position: absolute;
-
-  display: flex;
-  flex-direction: column;
-  width: 200px;
 }
