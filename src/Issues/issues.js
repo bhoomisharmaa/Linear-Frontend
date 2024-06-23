@@ -346,8 +346,8 @@ function FilterDisplaySection({ handleFilterButtonClick }) {
   return (
     <div className="filter-display flex justify-between items-center py-2">
       <button
-        className="flex items-center gap-1  px-2 py-0.5 rounded-sm hover:brightness-200 hover:bg-[#63676d19]"
-        onClick={(event) => handleFilterButtonClick(event)}
+        className="flex gap-1 px-2 py-0.5 rounded-sm hover:brightness-200 hover:bg-[#63676d19]"
+        onClick={handleFilterButtonClick}
       >
         <FilterSvg />
         <span>Filter</span>

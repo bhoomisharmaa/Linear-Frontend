@@ -21,7 +21,6 @@ export default function ActiveTeam() {
   const [issueTitle, setIssueTitle] = useState(0);
   const [issueIndex, setIssueIndex] = useState(0);
   const [showFilterBox, setShowFilterBox] = useState(false);
-  const [mousePos, setMousePos] = useState([]);
   const getTeams = async () => {
     try {
       let team = await axios.get("http://localhost:3001/teams/get-team");
@@ -43,8 +42,7 @@ export default function ActiveTeam() {
     setShowRenameBox(true);
   };
 
-  const handleFilterButtonClick = (event) => {
-    setMousePos([event.clientX, event.clientY]);
+  const handleFilterButtonClick = () => {
     setShowFilterBox(true);
   };
   return (
@@ -121,13 +119,7 @@ export default function ActiveTeam() {
           teamIndex={activeTeamIndex}
         />
       )}
-      {showFilterBox && (
-        <FilterBox
-          mousePosX={mousePos[0]}
-          mousePosY={mousePos[1]}
-          setShowFilterBox={setShowFilterBox}
-        />
-      )}
+      {showFilterBox && <FilterBox setShowFilterBox={setShowFilterBox} />}
     </div>
   );
 }

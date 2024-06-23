@@ -3,7 +3,7 @@ import { HighPrioritySvg } from "../svg-icons/priority";
 import { BacklogSvg } from "../svg-icons/status";
 import "./filter-box.css";
 
-export default function FilterBox({ mousePosX, mousePosY, setShowFilterBox }) {
+export default function FilterBox({ setShowFilterBox }) {
   return (
     <div className="absolute top-0 w-screen h-screen">
       <div
@@ -12,7 +12,7 @@ export default function FilterBox({ mousePosX, mousePosY, setShowFilterBox }) {
       />
       <div
         className="right-click-div gap-1 text-sm py-2 px-2"
-        style={{ left: mousePosX - 20, top: mousePosY + 10 }}
+        style={{ left: 285, top: 79 }}
       >
         <button className="buttons flex gap-2 items-center">
           <BacklogSvg /> <span>Status</span>
