@@ -21,6 +21,10 @@ export default function ActiveTeam() {
   const [issueTitle, setIssueTitle] = useState(0);
   const [issueIndex, setIssueIndex] = useState(0);
   const [showFilterBox, setShowFilterBox] = useState(false);
+  const [statusToFilter, setStatusToFilter] = useState([]);
+  const [labelToFilter, setLabelToFilter] = useState([]);
+  const [priorityToFilter, setPriorityToFilter] = useState([]);
+  const [contentToFilter, setContentToFilter] = useState("");
   const getTeams = async () => {
     try {
       let team = await axios.get("http://localhost:3001/teams/get-team");
@@ -45,6 +49,7 @@ export default function ActiveTeam() {
   const handleFilterButtonClick = () => {
     setShowFilterBox(true);
   };
+
   return (
     <div className="h-vh w-vh relative">
       <div className="acive-team-main">
@@ -69,6 +74,10 @@ export default function ActiveTeam() {
                       teamIndex={team.team_index}
                       handleRenameBtnClick={handleRenameBtnClick}
                       handleFilterButtonClick={handleFilterButtonClick}
+                      setContentToFilter={setContentToFilter}
+                      setLabelToFilter={setLabelToFilter}
+                      setPriorityToFilter={setPriorityToFilter}
+                      setStatusToFilter={setStatusToFilter}
                     />
                   );
                 })}
@@ -119,7 +128,17 @@ export default function ActiveTeam() {
           teamIndex={activeTeamIndex}
         />
       )}
-      {showFilterBox && <FilterBox setShowFilterBox={setShowFilterBox} />}
+      {showFilterBox && (
+        <FilterBox
+          setShowFilterBox={setShowFilterBox}
+          contentToFilter={contentToFilter}
+          labelToFilter={labelToFilter}
+          priorityToFilter={priorityToFilter}
+          setContentToFilter={setContentToFilter}
+          statusToFilter={statusToFilter}
+          setStatusToFilter={setStatusToFilter}
+        />
+      )}
     </div>
   );
 }

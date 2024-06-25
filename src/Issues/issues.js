@@ -21,6 +21,10 @@ export default function Issues({
   teamIdentifier,
   handleRenameBtnClick,
   handleFilterButtonClick,
+  setStatusToFilter,
+  setLabelToFilter,
+  setPriorityToFilter,
+  setContentToFilter,
 }) {
   return (
     <Routes>
@@ -33,6 +37,10 @@ export default function Issues({
             teamIdentifier={teamIdentifier}
             handleRenameBtnClick={handleRenameBtnClick}
             handleFilterButtonClick={handleFilterButtonClick}
+            setContentToFilter={setContentToFilter}
+            setLabelToFilter={setLabelToFilter}
+            setPriorityToFilter={setPriorityToFilter}
+            setStatusToFilter={setStatusToFilter}
           />
         }
       ></Route>
@@ -45,6 +53,10 @@ export default function Issues({
             teamIndex={teamIndex}
             handleRenameBtnClick={handleRenameBtnClick}
             handleFilterButtonClick={handleFilterButtonClick}
+            setContentToFilter={setContentToFilter}
+            setLabelToFilter={setLabelToFilter}
+            setPriorityToFilter={setPriorityToFilter}
+            setStatusToFilter={setStatusToFilter}
           />
         }
       ></Route>
@@ -57,6 +69,10 @@ export default function Issues({
             teamIndex={teamIndex}
             handleRenameBtnClick={handleRenameBtnClick}
             handleFilterButtonClick={handleFilterButtonClick}
+            setContentToFilter={setContentToFilter}
+            setLabelToFilter={setLabelToFilter}
+            setPriorityToFilter={setPriorityToFilter}
+            setStatusToFilter={setStatusToFilter}
           />
         }
       ></Route>
@@ -71,6 +87,10 @@ function AllIssuesPage({
   teamIdentifier,
   handleRenameBtnClick,
   handleFilterButtonClick,
+  setStatusToFilter,
+  setLabelToFilter,
+  setPriorityToFilter,
+  setContentToFilter,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
@@ -85,6 +105,10 @@ function AllIssuesPage({
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
         handleRenameBtnClick={handleRenameBtnClick}
+        setContentToFilter={setContentToFilter}
+        setLabelToFilter={setLabelToFilter}
+        setPriorityToFilter={setPriorityToFilter}
+        setStatusToFilter={setStatusToFilter}
       />
     </div>
   );
@@ -96,6 +120,10 @@ function ActiveIssuesPage({
   teamIdentifier,
   handleRenameBtnClick,
   handleFilterButtonClick,
+  setStatusToFilter,
+  setLabelToFilter,
+  setPriorityToFilter,
+  setContentToFilter,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
@@ -110,6 +138,10 @@ function ActiveIssuesPage({
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
         handleRenameBtnClick={handleRenameBtnClick}
+        setContentToFilter={setContentToFilter}
+        setLabelToFilter={setLabelToFilter}
+        setPriorityToFilter={setPriorityToFilter}
+        setStatusToFilter={setStatusToFilter}
       />
     </div>
   );
@@ -121,6 +153,10 @@ function BacklogIssuesPage({
   teamIdentifier,
   handleRenameBtnClick,
   handleFilterButtonClick,
+  setStatusToFilter,
+  setLabelToFilter,
+  setPriorityToFilter,
+  setContentToFilter,
 }) {
   return (
     <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)]">
@@ -137,6 +173,10 @@ function BacklogIssuesPage({
         teamIdentifier={teamIdentifier}
         teamIndex={teamIndex}
         handleRenameBtnClick={handleRenameBtnClick}
+        setContentToFilter={setContentToFilter}
+        setLabelToFilter={setLabelToFilter}
+        setPriorityToFilter={setPriorityToFilter}
+        setStatusToFilter={setStatusToFilter}
       />
     </div>
   );
@@ -149,6 +189,10 @@ function IssueSection({
   teamIndex,
   teamIdentifier,
   handleRenameBtnClick,
+  setStatusToFilter,
+  setLabelToFilter,
+  setPriorityToFilter,
+  setContentToFilter,
 }) {
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [todoIssues, setTodoIssues] = useState([]);
@@ -160,6 +204,7 @@ function IssueSection({
   const [isSmallBoxClosed, setIsSmallBoxClosed] = useState(false); //checks if any other box is open
   const [issueIsChanged, setIssueIsChanged] = useState(false);
   const [loading, setLoading] = useState(true);
+  const statusFilter = [];
 
   // Fetches issues from db according to their status
   const getIssues = async (status, setArray) => {
@@ -280,6 +325,9 @@ function IssueSection({
           handleRenameBtnClick={handleRenameBtnClick}
         />,
       ]);
+      if (!!todoIssues.length) statusFilter.push("Todo");
+      if (!!inProgressIssues.length) statusFilter.push("InProgress");
+      setStatusToFilter(statusFilter);
     } else if (issueToBeDisplayed === "backlog") {
       setIssueToReturn([
         <IssueBasicSyntax

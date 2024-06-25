@@ -94,7 +94,7 @@ export default function AdditionBoxes({
   );
 }
 
-function TickBoxForm({
+export function TickBoxForm({
   iconMap,
   setStuff,
   icon,
