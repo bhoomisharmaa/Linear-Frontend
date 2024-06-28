@@ -9,9 +9,7 @@ export const updateIssue = async (
   try {
     await axios.patch(
       `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
-      {
-        data,
-      }
+      data
     );
     setIssueHasUpdated(true);
   } catch (error) {
