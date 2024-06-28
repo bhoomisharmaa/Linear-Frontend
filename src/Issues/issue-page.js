@@ -380,12 +380,10 @@ function InfoButtons({
   const [isChecked, setIsChecked] = useState(true);
   const updateIssue = async (updateItem) => {
     try {
-      await axios.post(
+      await axios.patch(
         `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
         {
-          data: {
-            [updateKey]: updateItem,
-          },
+          [updateKey]: updateItem,
         }
       );
       setIssueHasUpdated(true);

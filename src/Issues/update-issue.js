@@ -7,7 +7,7 @@ export const updateIssue = async (
   setIssueHasUpdated
 ) => {
   try {
-    await axios.post(
+    await axios.patch(
       `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
       {
         data,

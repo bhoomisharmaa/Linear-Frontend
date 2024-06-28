@@ -5,7 +5,7 @@ import axios from "axios";
 
 async function createTeam(team_name, identifier) {
   try {
-    const team = await axios.post(`http://localhost:3001/teams/create-team`, {
+    const team = await axios.post(`http://localhost:3001/team/create-team`, {
       team_name,
       identifier,
     });

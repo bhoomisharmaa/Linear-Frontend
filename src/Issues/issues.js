@@ -210,7 +210,8 @@ function IssueSection({
   const getIssues = async (status, setArray) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/issues/${teamIndex}/get-issues/${status}`
+        `http://localhost:3001/issues/${teamIndex}/get-issues`,
+        { params: { status } }
       );
       setArray(response.data);
       setLoading(false);

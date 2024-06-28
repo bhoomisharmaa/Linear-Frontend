@@ -27,7 +27,7 @@ export default function ActiveTeam() {
   const [contentToFilter, setContentToFilter] = useState("");
   const getTeams = async () => {
     try {
-      let team = await axios.get("http://localhost:3001/teams/get-team");
+      let team = await axios.get("http://localhost:3001/team/get-team");
       setTeams(team.data);
     } catch {}
   };

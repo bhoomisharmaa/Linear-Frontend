@@ -44,20 +44,16 @@ export default function NewIssue({
     else setAnimationName("window-shrink 0.5s ease-in-out forwards");
   };
   const createIssue = async () => {
-    console.log(issueDescription);
-
     try {
       const issue = await axios.post(
         `http://localhost:3001/issues/${teamIndex}/create-issues`,
         {
-          data: {
-            name: issueTitle,
-            description: issueDescription,
-            status: issueStatus,
-            createdAt: new Date(),
-            priority: issuePriority,
-            label: issueLabel,
-          },
+          name: issueTitle,
+          description: issueDescription,
+          status: issueStatus,
+          createdAt: new Date(),
+          priority: issuePriority,
+          label: issueLabel,
         }
       );
     } catch (error) {

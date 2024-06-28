@@ -186,12 +186,10 @@ function ButtonDiv({
 
   const updateIssue = async (updateItem) => {
     try {
-      await axios.post(
+      await axios.patch(
         `http://localhost:3001/issues/update-issues/${teamIndex}/${issueIndex}`,
         {
-          data: {
-            [updateKey]: updateItem,
-          },
+          [updateKey]: updateItem,
         }
       );
       setIsIssueChanged(true);
