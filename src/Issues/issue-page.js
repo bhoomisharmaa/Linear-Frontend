@@ -152,7 +152,12 @@ function MainTeamPage({
   );
 }
 
-function MsgBox({ msgText, msgAnimation, setMsgAnimation, setShowMsgBox }) {
+export function MsgBox({
+  msgText,
+  msgAnimation,
+  setMsgAnimation,
+  setShowMsgBox,
+}) {
   return (
     <div
       className="absolute w-max bottom-0 right-0 m-2 bg-[var(--color-button-tertiary)] text-white font-semibold px-3 py-2 flex gap-10 text-[13px] border-[1px] border-[var(--color-button-border)] rounded-md"

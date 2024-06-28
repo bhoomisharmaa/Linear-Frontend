@@ -5,12 +5,23 @@ import ProjectSvg from "../svg-icons/projects";
 import BugSvg from "../svg-icons/bug";
 import NewTeamBox from "./new-team";
 import { useState } from "react";
+import { MsgBox } from "../Issues/issue-page";
 
 export default function TeamPage({ teams }) {
   const [canShowNewTeam, setCanShowNewTeam] = useState(false);
+  const [msgAnimation, setMsgAnimation] = useState("");
+
+  const handleAddBtnClick = () => {
+    setMsgAnimation(
+      canShowNewTeam
+        ? "button-pop 0.5s forwards ease-in-out"
+        : "button-up 0.5s forwards ease-in-out"
+    );
+    setCanShowNewTeam(true);
+  };
   return (
-    <div className="relative issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default">
-      <Header teams={teams} setCanShowNewTeam={setCanShowNewTeam} />
+    <div className="issue-div h-full w-full flex flex-col text-[var(--color-text-primary)] cursor-default overflow-hidden">
+      <Header teams={teams} handleAddBtnClick={handleAddBtnClick} />
       <FilterDisplaySection />
       <ThirdCol />
       {teams.map((team) => {
@@ -22,12 +33,24 @@ export default function TeamPage({ teams }) {
           />
         );
       })}
-      {canShowNewTeam && <NewTeamBox setCanShowNewTeam={setCanShowNewTeam} />}
+      {canShowNewTeam &&
+        (teams.length < 2 ? (
+          <NewTeamBox setCanShowNewTeam={setCanShowNewTeam} teams={teams} />
+        ) : (
+          <div className="absolute bottom-0 right-0 m-2 h-max w-max bg-red-500">
+            <MsgBox
+              msgAnimation={msgAnimation}
+              msgText={"You've reached the limit of teams."}
+              setMsgAnimation={setMsgAnimation}
+              setShowMsgBox={setCanShowNewTeam}
+            />
+          </div>
+        ))}
     </div>
   );
 }
 
-function Header({ teams, setCanShowNewTeam }) {
+function Header({ teams, handleAddBtnClick }) {
   return (
     <div className="header flex justify-between items-center text-[var(--color-text-tertiary])">
       <div className="flex items-center gap-2.5 font-medium">
@@ -36,10 +59,7 @@ function Header({ teams, setCanShowNewTeam }) {
           {teams.length}
         </span>
       </div>
-      <button
-        className="buttons-team py-1 px-2"
-        onClick={() => setCanShowNewTeam(true)}
-      >
+      <button className="buttons-team py-1 px-2" onClick={handleAddBtnClick}>
         <PlusSvg />
         <p className="text-xs">Add Team</p>
       </button>

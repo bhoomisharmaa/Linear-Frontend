@@ -87,8 +87,8 @@ export default function ActiveTeam() {
           <Route
             path="/teams"
             element={
-              <div className="active-page">
-                <TeamPage teams={teams} />{" "}
+              <div className="active-page overflow-hidden">
+                <TeamPage teams={teams} />
               </div>
             }
           />
